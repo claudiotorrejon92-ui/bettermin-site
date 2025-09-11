@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BetterMin | IA + Biotecnología para relaves</title>
+  <link rel="icon" href="assets/favicon_bettermin.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon_32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/favicon_180.png" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --jade:#007850; --gold:#D4AF37; --graphite:#333333; --white:#FFFFFF;
+      --bg:var(--white); --fg:var(--graphite); --muted:#555; --line:#E6E6E6; --card:#fff;
+    }
+    html,body{margin:0; background:var(--bg); color:var(--fg); font-family:Roboto, Helvetica Neue, Arial, sans-serif;}
+    header{background:var(--white); border-bottom:1px solid var(--line); padding:12px 20px; display:flex; align-items:center; justify-content:space-between}
+    .logo{height:42px; width:auto; display:block}
+    .menu a{color:var(--graphite); margin-left:1rem; text-decoration:none; font-family:Montserrat, Roboto, Arial, sans-serif}
+    .hero{padding:56px 20px; text-align:center}
+    .btn{display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1rem; border-radius:12px; border:1px solid var(--jade); background:var(--jade); color:#fff; font-weight:600; font-family:Montserrat, Roboto, Arial, sans-serif}
+    .btn.secondary{background:transparent; border-color:var(--graphite); color:var(--graphite)}
+    section{padding:40px 20px; max-width:1000px; margin:auto}
+    .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px; margin:10px 0}
+    .muted{color:var(--muted)}
+    footer{background:var(--white); border-top:1px solid var(--line); padding:28px 20px; text-align:center; color:#666}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="assets/logo-bettermin-definitivo.svg" alt="BetterMin" class="logo"/>
+    </div>
+    <nav class="menu">
+      <a href="#quienes">👥 Quiénes somos</a>
+      <a href="#ecopilot">🤖 Eco-Pilot</a>
+      <a href="#biotecnologia">🧬 Biotecnología</a>
+      <a href="#sostenibilidad">🌱 Sostenibilidad</a>
+      <a href="https://www.linkedin.com/company/bettermin-chile" target="_blank">🔗 LinkedIn</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1 style="font-family:Montserrat, Roboto, Arial, sans-serif; font-weight:800">🌍 Transformamos relaves en valor con IA y biotecnología</h1>
+    <p class="muted">BetterMin convierte un problema ambiental en una oportunidad productiva. Nuestro sistema de IA <strong>Eco-Pilot</strong> entrega <em>recetas inteligentes</em> para optimizar procesos y reducir riesgos ♻️.</p>
+  </section>
+
+  <section id="quienes">
+    <div class="card">
+      <h2>👥 Quiénes somos</h2>
+      <p>BetterMin es una empresa científica-tecnológica chilena dedicada al reprocesamiento sustentable de relaves mediante <strong>biotecnología</strong> y <strong>Eco-Pilot</strong>, nuestro cerebro digital de IA.</p>
+    </div>
+  </section>
+
+  <section id="ecopilot">
+    <div class="card">
+      <h2>🤖 Eco-Pilot (IA)</h2>
+      <p>Eco-Pilot analiza datos de geoquímica, mineralogía y cinética para entregar <strong>recetas dinámicas</strong> 📜 con setpoints, dosis y tiempos. Optimiza VEN 💰 y IAN 🌱 en simultáneo.</p>
+      <ul class="muted">
+        <li>📊 Predicciones con validación (R²/MAE).</li>
+        <li>🔬 Recomendaciones para BIOX/biolixiviación.</li>
+        <li>⚡ Alertas ambientales y de consumo ácido.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="biotecnologia">
+    <div class="card">
+      <h2>🧬 Biotecnología aplicada</h2>
+      <p>Implementamos trenes de <strong>BIOX/biolixiviación</strong> con bacterias acidófilas para recuperar metales y estabilizar arsénico. IA y biología trabajan en sinergia 🤝.</p>
+    </div>
+  </section>
+
+  <section id="sostenibilidad">
+    <div class="card">
+      <h2>🌱 Sostenibilidad e impacto</h2>
+      <p>BetterMin mide el <strong>IAN</strong> junto al <strong>VEN</strong> para equilibrar economía y ambiente. Priorizamos baja huella hídrica 💧, eficiencia energética ⚡ y productos estables post-proceso.</p>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> BetterMin · IA + Biotecnología para relaves 🌍 · Síguenos en <a href="https://www.linkedin.com/company/bettermin-chile" target="_blank">LinkedIn</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
