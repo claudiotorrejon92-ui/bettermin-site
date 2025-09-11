@@ -1,10 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
-  <!-- Isotipo circular verde -->
-  <circle cx="150" cy="200" r="120" fill="#007850"/>
-  <!-- Segmento dorado simulando biotecnología/minería -->
-  <path d="M150,80 A120,120 0 0,1 270,200 A120,120 0 0,1 150,320 Z" fill="#D4AF37"/>
-  <!-- Texto corporativo -->
-  <text x="320" y="225" font-family="Montserrat, Arial, Helvetica, sans-serif" font-size="90" fill="#333333">
-    BetterMin
-  </text>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="leaf" x1="0" x2="1">
+      <stop offset="0%" stop-color="#2e7d32"/>
+      <stop offset="100%" stop-color="#1b5e20"/>
+    </linearGradient>
+    <linearGradient id="earth" x1="0" x2="1">
+      <stop offset="0%" stop-color="#8b5e3c"/>
+      <stop offset="100%" stop-color="#6f4429"/>
+    </linearGradient>
+  </defs>
+  <circle cx="22" cy="22" r="18" fill="url(#leaf)"/>
+  <path d="M40 52a18 18 0 1 0-12-32 18 18 0 0 1 12 32z" fill="url(#earth)"/>
 </svg>
