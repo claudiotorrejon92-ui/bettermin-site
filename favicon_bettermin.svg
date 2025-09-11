@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <!-- Isotipo circular verde -->
+  <circle cx="150" cy="200" r="120" fill="#007850"/>
+  <!-- Segmento dorado simulando biotecnología/minería -->
+  <path d="M150,80 A120,120 0 0,1 270,200 A120,120 0 0,1 150,320 Z" fill="#D4AF37"/>
+  <!-- Texto corporativo -->
+  <text x="320" y="225" font-family="Montserrat, Arial, Helvetica, sans-serif" font-size="90" fill="#333333">
+    BetterMin
+  </text>
+</svg>
