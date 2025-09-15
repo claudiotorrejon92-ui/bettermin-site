@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Cpu, Factory, Leaf, Droplets, Zap, Users, ShieldCheck, ArrowRight, Menu, X } from 'lucide-react';
-import Chart from 'chart.js/auto';
+//import Chart from 'chart.js/auto';
 
 const InteractiveFlowchart = () => {
     return (
