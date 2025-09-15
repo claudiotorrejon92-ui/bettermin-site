@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import HomePage from './pages/HomePage.jsx';
 import ProcesosPage from './pages/ProcesosPage.jsx';
 import TecnologiaPage from './pages/TecnologiaPage.jsx';
@@ -7,7 +7,7 @@ import SostenibilidadPage from './pages/SostenibilidadPage.jsx';
 
 export default function App() {
   return (
-    <Router>
+    <>
       <nav className="p-4 bg-gray-100">
         <ul className="flex gap-4">
           <li><Link to="/">Inicio</Link></li>
@@ -22,6 +22,6 @@ export default function App() {
         <Route path="/tecnologia" element={<TecnologiaPage />} />
         <Route path="/sostenibilidad" element={<SostenibilidadPage />} />
       </Routes>
-    </Router>
+    </>
   );
 }
