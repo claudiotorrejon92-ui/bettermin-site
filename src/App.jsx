@@ -1,31 +1,27 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
-import { BarChart3 } from 'lucide-react';
-import './index.css';
-
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
-
-const data = {
-  labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
-  datasets: [
-    {
-      label: 'Producción',
-      data: [12, 19, 3, 5, 2, 3],
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.3,
-    },
-  ],
-};
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import HomePage from './pages/HomePage.jsx';
+import ProcesosPage from './pages/ProcesosPage.jsx';
+import TecnologiaPage from './pages/TecnologiaPage.jsx';
+import SostenibilidadPage from './pages/SostenibilidadPage.jsx';
 
 export default function App() {
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-4 flex items-center gap-2">
-        <BarChart3 /> BetterMin
-      </h1>
-      <Line data={data} />
-    </div>
+    <Router>
+      <nav className="p-4 bg-gray-100">
+        <ul className="flex gap-4">
+          <li><Link to="/">Inicio</Link></li>
+          <li><Link to="/procesos">Procesos</Link></li>
+          <li><Link to="/tecnologia">Tecnología</Link></li>
+          <li><Link to="/sostenibilidad">Sostenibilidad</Link></li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/procesos" element={<ProcesosPage />} />
+        <Route path="/tecnologia" element={<TecnologiaPage />} />
+        <Route path="/sostenibilidad" element={<SostenibilidadPage />} />
+      </Routes>
+    </Router>
   );
 }
-
