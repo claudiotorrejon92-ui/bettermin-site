@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage.jsx';
 import ProcesosPage from './pages/ProcesosPage.jsx';
 import TecnologiaPage from './pages/TecnologiaPage.jsx';
 import SostenibilidadPage from './pages/SostenibilidadPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/procesos" element={<ProcesosPage />} />
         <Route path="/tecnologia" element={<TecnologiaPage />} />
         <Route path="/sostenibilidad" element={<SostenibilidadPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
