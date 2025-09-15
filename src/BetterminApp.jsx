@@ -7,7 +7,7 @@ const InteractiveFlowchart = () => {
         <div className="p-8 border-2 border-dashed border-stone-300 rounded-2xl text-center">
             <h4 className="text-xl font-semibold text-stone-800 mb-2">Modelo Spoke–Hub</h4>
             <p className="text-stone-500 max-w-3xl mx-auto">
-                Nuestro modelo combina módulos de preconcentración en seco (Spokes) y un centro biotecnológico (Hub) para reprocesar relaves de forma eficiente.
+                Nuestro modelo combina módulos de preconcentración en seco (Spokes) y un centro biotecnológico (Hub) para reprocesar relaves y concentrados de forma eficiente.
             </p>
             <div className="grid md:grid-cols-3 gap-6 mt-6 text-left">
                 <div>
@@ -79,7 +79,7 @@ const SystemArchitecture = () => {
         <div className="container mx-auto px-4 py-8 md:py-12">
             <header className="text-center mb-10 md:mb-16">
                 <h1 className="text-3xl md:text-5xl font-bold text-stone-900 mb-2">Arquitectura Digital Aplicada</h1>
-                <p className="text-lg md:text-xl text-stone-600">Proyecto "Mina Delirio"</p>
+                <p className="text-lg md:text-xl text-stone-600">"</p>
                 <div className="w-24 h-1 bg-green-600 mx-auto mt-4"></div>
                 <p className="max-w-3xl mx-auto mt-6 text-stone-700">
                     Esta es una exploración interactiva de la arquitectura tecnológica de 4 capas para el proyecto. Cada capa se basa en la anterior, desde la infraestructura física hasta el cerebro digital que optimiza toda la operación. Haga clic en cada capa para revelar sus componentes y propósito.
@@ -112,7 +112,7 @@ const SystemArchitecture = () => {
 
                 <Layer id="layer-2" icon="💻" title="Capa 2: Sistema Nervioso Periférico" subtitle="Control Local" color="teal">
                     <p className="mb-4 text-slate-700">
-                        Esta capa está incluida en los paquetes "llave en mano" de los proveedores de equipos. Su función es la operación segura y autónoma básica de cada componente individual, como los reflejos del cuerpo.
+                        . Su función es la operación segura y autónoma básica de cada componente individual, como los reflejos del cuerpo.
                     </p>
                     <h3 className="font-semibold text-lg text-slate-800 mb-3">Componentes:</h3>
                     <ul className="list-disc list-inside space-y-3 text-slate-600">
@@ -259,7 +259,7 @@ const SostenibilidadPage = () => {
                         <p>Reducimos los pasivos ambientales y estabilizamos contaminantes como arsénico mediante procesos biotecnológicos y de preconcentración.</p>
                     </EsgPillar>
                     <EsgPillar icon={<Zap className="h-10 w-12 text-green-600" />} title="Economía Circular (Económico)">
-                        <p>Transformamos desechos en valor, recuperando oro, plata y cobre y creando un ciclo productivo sostenible.</p>
+                        <p>Transformamos desechos en valor, recuperando oro, plata, cobre, cobalto, niquel y tierras raras. creando un ciclo productivo sostenible.</p>
                         <div className="mt-6">
                             <SustainabilityDashboard />
                         </div>
