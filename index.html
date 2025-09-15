@@ -18,6 +18,7 @@
   <div class="logo">
     <img src="assets/logo-bettermin-definitivo.svg" alt="BetterMin">
   </div>
+  <button class="menu-toggle" aria-label="Menú" type="button">☰</button>
   <nav>
     <a href="#quienes">Quiénes somos</a>
     <a href="#ecopilot">Eco‑Pilot</a>
@@ -73,6 +74,9 @@
 </footer>
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('nav');
+menuToggle.addEventListener('click', () => nav.classList.toggle('active'));
 </script>
 </body>
 </html>
