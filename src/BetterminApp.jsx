@@ -185,7 +185,7 @@ const HomePage = ({ onNavigate }) => {
                 </video>
                 <div className="relative z-20 px-4 sm:px-6 lg:px-8">
                     <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-4" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.7)' }}>
-                        Bettermin: Transformamos relaves en valor. <span className="text-green-400">Juntos creamos un futuro sostenible.</span>
+                        Bettermin: Transformamos relaves en valor <span className="text-green-400">Juntos creamos un futuro sostenible.</span>
                     </h1>
                     <p className="max-w-4xl mx-auto text-lg md:text-xl text-stone-100 mb-8" style={{ textShadow: '0 2px 5px rgba(0,0,0,0.7)' }}>
                         Bettermin es una startup científica y tecnológica chilena dedicada a transformar un problema ambiental crítico en una oportunidad productiva. Utilizamos biotecnología avanzada y nuestro Eco-Pilot, una plataforma de inteligencia artificial, para reprocesar relaves mineros de manera eficiente y responsable.
