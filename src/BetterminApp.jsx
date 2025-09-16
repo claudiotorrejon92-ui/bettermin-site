@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Cpu, Factory, Leaf, Droplets, Zap, Users, ShieldCheck, ArrowRight, Menu, X } from 'lucide-react';
+import { Cpu, Factory, Leaf, Droplets, Zap, Users, ShieldCheck, ArrowRight, Menu, X, Linkedin } from 'lucide-react';
 //import Chart from 'chart.js/auto';
 
 const InteractiveFlowchart = () => {
@@ -368,6 +368,15 @@ export default function App() {
                         <button onClick={() => handleNavigate('procesos')} className="text-stone-600 hover:text-green-600">Procesos</button>
                         <button onClick={() => handleNavigate('tecnologia')} className="text-stone-600 hover:text-green-600">Tecnología</button>
                         <button onClick={() => handleNavigate('sostenibilidad')} className="text-stone-600 hover:text-green-600">Sostenibilidad</button>
+                        <a
+                            href="https://www.linkedin.com/company/bettermin-chile"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="LinkedIn"
+                            className="text-stone-600 hover:text-green-600"
+                        >
+                            <Linkedin size={24} />
+                        </a>
                     </div>
                     <p className="text-stone-500">&copy; {new Date().getFullYear()} Bettermin. Todos los derechos reservados.</p>
                     <p className="text-stone-400 text-sm mt-2">Transformando la minería para un futuro sostenible.</p>
