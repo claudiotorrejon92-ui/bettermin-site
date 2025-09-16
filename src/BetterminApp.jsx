@@ -93,9 +93,9 @@ const SystemArchitecture = () => {
                     </p>
                     <h3 className="font-semibold text-lg text-stone-800 mb-3">Componentes Clave:</h3>
                     <ul className="list-disc list-inside space-y-3 text-stone-600">
-                        <li><span className="font-semibold text-purple-700">Módulo ECO-PILOT:</span> Un Gemelo Digital con IA enfocado en la planta M-10 para maximizar la <span className="font-medium text-slate-800">"Rentabilidad Neta por Hora"</span>.</li>
-                        <li><span className="font-semibold text-purple-700">Módulo BIOX-PILOT:</span> Un Gemelo Digital con IA para optimizar el Hub Biotecnológico, buscando maximizar la <span className="font-medium text-slate-800">"Tasa de Oxidación Neta Sostenible"</span>.</li>
-                        <li><span className="font-semibold text-purple-700">Plataforma de Datos Unificada:</span> El núcleo central donde reside toda la inteligencia, se procesan los datos y se emiten las directrices de optimización para todo el sistema.</li>
+                        <li><span className="font-semibold text-purple-700">Módulo de caracterización de relaves:</span> Procesa las entradas de leyes de metales, contaminantes críticos, granulometría, mineralogía y condiciones operacionales históricas para generar el pasaporte digital de cada lote, indicadores de aptitud, predicciones de recuperación y alertas de riesgos.</li>
+                        <li><span className="font-semibold text-purple-700">Módulo de caracterización avanzada / laboratorio biotecnológico:</span> Integra los resultados de pruebas biológicas, mediciones de actividad bacteriana y parámetros operacionales (pH, potencial redox, nutrientes, temperatura) para entregar curvas cinéticas, eficiencias, predicciones de recuperación y recomendaciones bio-operativas.</li>
+                        <li><span className="font-semibold text-purple-700">Plataforma de Datos Unificada:</span> Orquesta la ingesta, gobernanza y modelación de datos de todos los módulos, asegurando trazabilidad y alimentando los motores de optimización de la capa.</li>
                     </ul>
                 </Layer>
 
