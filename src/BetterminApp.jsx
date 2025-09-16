@@ -129,8 +129,8 @@ const SystemArchitecture = () => {
                         <div>
                             <h3 className="font-semibold text-lg text-slate-800 mb-3">Componentes Físicos:</h3>
                             <ul className="list-disc list-inside space-y-2 text-slate-600">
-                                <li><span className="font-semibold">Planta M-10:</span> Módulos de Preparación, Deslamado, Concentración Primaria, Ultra-Concentración, y Deshidratación.</li>
-                                <li><span className="font-semibold">Hub Biotecnológico:</span> Islas de Bio-oxidación y Lixiviación, junto con áreas de soporte.</li>
+                                <li><span className="font-semibold">Pre-concentracion:</span> Módulos de Preparación, Deslamado, Concentración Primaria, Ultra-Concentración, y Deshidratación.</li>
+                                <li><span className="font-semibold">Biotecnológico:</span> Islas de Bio-oxidación y Lixiviación, junto con áreas de soporte.</li>
                             </ul>
                         </div>
                         <div>
