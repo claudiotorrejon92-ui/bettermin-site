@@ -149,15 +149,6 @@ const SystemArchitecture = () => {
     );
 };
 
-const SustainabilityDashboard = () => {
-    return (
-        <div className="p-8 border-2 border-dashed border-stone-300 rounded-2xl text-center">
-            <h4 className="text-xl font-semibold text-stone-800 mb-2">Dashboard de Sostenibilidad</h4>
-            <p className="text-stone-500">[El contenido completo del dashboard de sostenibilidad iría aquí.]</p>
-        </div>
-    );
-};
-
 const Section = ({ children, className = '' }) => (
     <section className={`py-12 md:py-20 px-4 sm:px-6 lg:px-8 ${className}`}>
         {children}
@@ -260,9 +251,6 @@ const SostenibilidadPage = () => {
                     </EsgPillar>
                     <EsgPillar icon={<Zap className="h-10 w-12 text-green-600" />} title="Economía Circular (Económico)">
                         <p>Transformamos desechos en valor, recuperando oro, plata, cobre, cobalto, niquel y tierras raras. creando un ciclo productivo sostenible.</p>
-                        <div className="mt-6">
-                            <SustainabilityDashboard />
-                        </div>
                     </EsgPillar>
                     <EsgPillar icon={<Users className="h-10 w-12 text-green-600" />} title="Uso Responsable de Recursos (Ambiental)">
                         <p>Utilizamos procesos sin uso de agua en la preconcentración y optimizamos el consumo energético mediante inteligencia artificial.</p>
