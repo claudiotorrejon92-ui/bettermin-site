@@ -363,8 +363,7 @@ export default function App() {
 
             <footer className="bg-stone-100 border-t border-stone-200">
                 <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
-                    <p className="text-stone-800 text-2xl font-bold tracking-wider mb-4">BETTERMIN</p>
-                    <div className="flex justify-center space-x-6 mb-8">
+<div className="flex items-center justify-center mb-4"><img src={logo} alt="Bettermin Logo" className="h-10 w-auto mr-3" /><p className="text-stone-800 text-2xl font-bold tracking-wider">BETTERMIN</p></div>                    <div className="flex justify-center space-x-6 mb-8">
                         <button onClick={() => handleNavigate('home')} className="text-stone-600 hover:text-green-600">Inicio</button>
                         <button onClick={() => handleNavigate('procesos')} className="text-stone-600 hover:text-green-600">Procesos</button>
                         <button onClick={() => handleNavigate('tecnologia')} className="text-stone-600 hover:text-green-600">Tecnología</button>
