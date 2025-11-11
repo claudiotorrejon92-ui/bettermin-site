@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Cpu, Factory, Leaf, Droplets, Zap, Users, ShieldCheck, ArrowRight, Menu, X, Linkedin } from 'lucide-react';
+import logo from '../assets/logo-bettermin-definitivo.svg';
 //import Chart from 'chart.js/auto';
 
 const InteractiveFlowchart = () => {
@@ -311,8 +312,8 @@ export default function App() {
                 <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-20">
                         <div className="flex-shrink-0">
-                            <button onClick={() => handleNavigate('home')} className={`text-2xl font-bold tracking-wider transition-colors ${isScrolled ? 'text-stone-800' : 'text-white'}`}>
-                                BETTERMIN
+                            <button onClick={() => handleNavigate('home')} className={`flex items-center text-2xl font-bold tracking-wider transition-colors ${isScrolled ? 'text-stone-800' : 'text-white'}`}>
+                                <><img src={logo} alt="Bettermin Logo" className="h-8 w-auto mr-2" /><span>BETTERMIN</span></>
                             </button>
                         </div>
                         <div className="hidden md:block">
