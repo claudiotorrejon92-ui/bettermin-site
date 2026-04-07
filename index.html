@@ -132,8 +132,10 @@
             background: #005885;
             transform: scale(1.05);
         }
-    </style>
+        </style>
+</head>
 <body>
+
     <!-- Navigation -->
     <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-200/50">
         <div class="max-w-7xl mx-auto px-6 py-4">
@@ -412,11 +414,49 @@
                     </div>
                     <h3 class="text-2xl font-bold text-gray-800 mb-4">Contacto Directo</h3>
                     <p class="text-gray-600 mb-6">
-                        ¿Listo para transformar tu operación minera? Contáctanos para una consulta personalizada.
-                    </p>
-                    <button class="btn-primary text-white px-6 py-3 rounded-lg font-semibold">
-                        Escríbenos
-                    </button>
+  ¿Listo para transformar tu operación minera? Déjanos tus datos y te contactaremos.
+</p>
+
+<form action="https://formspree.io/f/mqegnpzz" method="POST" class="space-y-3 text-left">
+  <input
+    type="text"
+    name="nombre"
+    placeholder="Nombre"
+    required
+    class="w-full p-3 rounded-lg border border-emerald-200"
+  />
+  <input
+    type="email"
+    name="email"
+    placeholder="Correo"
+    required
+    class="w-full p-3 rounded-lg border border-emerald-200"
+  />
+  <input
+    type="text"
+    name="empresa"
+    placeholder="Empresa"
+    class="w-full p-3 rounded-lg border border-emerald-200"
+  />
+  <textarea
+    name="mensaje"
+    placeholder="Cuéntanos qué necesitas optimizar"
+    required
+    rows="4"
+    class="w-full p-3 rounded-lg border border-emerald-200"
+  ></textarea>
+
+  <input type="hidden" name="_subject" value="Nuevo lead desde bettermin.com" />
+
+  <button type="submit" class="btn-primary text-white px-6 py-3 rounded-lg font-semibold w-full">
+    Enviar contacto
+  </button>
+
+  <p class="text-sm text-gray-500 text-center">
+    Gracias por escribirnos. Te contactaremos pronto.
+  </p>
+</form>
+
                 </div>
                 
                 <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border border-blue-200 fade-in stagger-2">
