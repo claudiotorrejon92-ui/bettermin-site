@@ -957,9 +957,9 @@ select{
   </div>
 
   <div style="background:#FFF;border:1px solid #EBEFED;border-radius:12px;padding:16px;margin:20px 0 0;text-align:center">
-    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#0E3B35;margin-bottom:6px">Al enviar, se abrirá tu app de email con todo listo</div>
-    <div style="font-size:11px;color:#8FA3AD;margin-bottom:10px">Solo tocá Enviar en el email. Adjuntá archivos Excel/CSV del cliente.</div>
-    <a href="#" onclick="var data={};document.querySelectorAll('[name]').forEach(function(e){if(e.name)data[e.name]=e.type==='checkbox'?(e.checked?'Sí':'No'):e.value});var s='BetterMin Onboarding - '+(data.cliente||'');window.location.href='mailto:?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(buildEmailBody(data));return false" style="display:inline-block;padding:10px 20px;background:#FFF;color:#2A7A63;border:1.5px solid #2A7A63;border-radius:8px;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px">Abrir Google Form →</a>
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#0E3B35;margin-bottom:6px">Envía automáticamente al email y Sheet de BetterMin</div>
+    <div style="font-size:11px;color:#8FA3AD;margin-bottom:10px">Cero clics extra. Adjuntá archivos Excel/CSV en el campo de links.</div>
+    <a href="#" onclick="submitForm();return false" style="display:inline-block;padding:10px 20px;background:#FFF;color:#2A7A63;border:1.5px solid #2A7A63;border-radius:8px;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px">Abrir Google Form →</a>
   </div>
 
   <div class="btn-row">
@@ -1265,95 +1265,43 @@ function submitForm() {
     return;
   }
   
-  // Guardar y descargar JSON
   saveDraft();
-  downloadBackup(data);
-  
-  // Construir email con todos los datos
-  var subject = 'BetterMin Onboarding - ' + (data.cliente || 'Sin nombre') + ' - ' + (data.planta || 'Sin planta');
-  var body = buildEmailBody(data);
-  
-  // Abrir cliente de email
-  var mailto = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-  
-  showToast('Abriendo email con todos los datos. Solo toca Enviar.', 'success');
   
   var submitBtn = document.getElementById('submitBtn');
   var submitText = document.getElementById('submitText');
+  var submitLoader = document.getElementById('submitLoader');
   submitBtn.disabled = true;
-  submitText.textContent = 'Abriendo email...';
+  submitText.style.display = 'none';
+  submitLoader.style.display = 'inline';
   
-  setTimeout(function() {
-    window.location.href = mailto;
-  }, 400);
-}
-
-function buildEmailBody(data) {
-  var lines = [];
-  lines.push('=== BETTERMIN — ONBOARDING DE DATOS EN TERRENO ===');
-  lines.push('');
-  lines.push('IDENTIFICACION');
-  lines.push('  Cliente: ' + (data.cliente || '-'));
-  lines.push('  Planta: ' + (data.planta || '-'));
-  lines.push('  Fecha: ' + (data.fechaVisita || '-'));
-  lines.push('  Contacto: ' + (data.contactoNombre || '-') + ' / ' + (data.contactoCargo || '-'));
-  lines.push('  Email: ' + (data.contactoEmail || '-') + ' | Tel: ' + (data.contactoTel || '-'));
-  lines.push('  Tomado por: ' + (data.tomadoPor || '-'));
-  lines.push('');
-  lines.push('DATOS DE PLANTA');
-  lines.push('  Mineral: ' + (data.mineral || '-'));
-  lines.push('  Subproductos: ' + (data.subproductos || '-'));
-  lines.push('  Capacidad: ' + (data.capacidad || '-') + ' ton/dia');
-  lines.push('  Proceso: ' + (data.tipoProceso || '-'));
-  lines.push('  Lineas: ' + (data.numLineas || '-') + ' | Horas: ' + (data.horasOp || '-'));
-  lines.push('');
-  lines.push('EQUIPAMIENTO');
-  lines.push('  Flowsheet: ' + (data.equipos || '-'));
-  lines.push('  Molienda: ' + (data.circuitoMolienda || '-'));
-  lines.push('  Celdas: ' + (data.celdasFlotacion || '-'));
-  lines.push('  Espesador: ' + (data.tieneEspesador || '-'));
-  lines.push('  Lixiviacion: ' + (data.tieneLixiviacion || '-'));
-  lines.push('  Reactivos: ' + (data.reactivos || '-'));
-  lines.push('  pH: ' + (data.rangoPH || '-'));
-  lines.push('');
-  lines.push('SENSORES');
-  lines.push('  Flujo: ' + (data.sensorFlujo || 'No') + ' | pH: ' + (data.sensorPH || 'No'));
-  lines.push('  Densidad: ' + (data.sensorDensidad || 'No') + ' | Analizador: ' + (data.analizadorLinea || 'No'));
-  lines.push('  Recuperacion: ' + (data.mideRecuperacion || 'No') + ' | Tonelaje: ' + (data.tonelajeOnline || 'No'));
-  lines.push('  PSD: ' + (data.psd || 'No'));
-  lines.push('  SCADA: ' + (data.scada || '-'));
-  lines.push('');
-  lines.push('HISTORIAL DE DATOS');
-  lines.push('  Base historica: ' + (data.baseHistorica || '-'));
-  lines.push('  Tipo DB: ' + (data.tipoDB || '-'));
-  lines.push('  Historial: ' + (data.mesesHistorial || '-'));
-  lines.push('  Frecuencia: ' + (data.frecuenciaCaptura || '-'));
-  lines.push('  Formato: ' + (data.formatoDatos || '-'));
-  lines.push('  Calidad: ' + (data.calidadDatos || '-') + '/5');
-  lines.push('  Comparte: ' + (data.comparteDatos || '-'));
-  lines.push('');
-  lines.push('MINERALOGIA Y LAB');
-  lines.push('  Ley cabeza: ' + (data.leyCabeza || '-'));
-  lines.push('  Variabilidad: ' + (data.variabilidad || '-'));
-  lines.push('  Dureza: ' + (data.dureza || '-'));
-  lines.push('  QEMSCAN: ' + (data.qemscan || '-'));
-  lines.push('  Muestreo: ' + (data.frecMuestreo || '-'));
-  lines.push('  Analisis: ' + (data.analisisLab || '-'));
-  lines.push('  QC: ' + (data.estandaresQC || '-'));
-  lines.push('  Reportes: ' + (data.formatoReportes || '-'));
-  lines.push('');
-  lines.push('IT Y ACCESO');
-  lines.push('  Acceso SCADA: ' + (data.accesoScada || '-'));
-  lines.push('  Red/Servidor: ' + (data.redServidor || '-'));
-  lines.push('  Admin IT: ' + (data.adminIT || '-'));
-  lines.push('  Links archivos: ' + (data.archivosLinks || '-'));
-  lines.push('');
-  lines.push('NOTAS');
-  lines.push('  ' + (data.notas || 'Sin notas'));
-  lines.push('');
-  lines.push('=== ADJUNTAR ARCHIVOS EXCEL/CSV DEL CLIENTE A ESTE EMAIL ===');
+  // Enviar al backend (email + Sheet automático)
+  var backendUrl = 'https://cottage-watershed-wright-women.trycloudflare.com';
   
-  return lines.join('\n');
+  fetch(backendUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(result) {
+    if (result.status === 'ok') {
+      showToast('Datos enviados! Email a claudio.torrejon@bettermin.com + Sheet actualizado.', 'success');
+      localStorage.removeItem(STORAGE_KEY);
+      uploadedFiles = []; renderFileList();
+      setTimeout(function() {
+        form.reset(); currentStep = 1; updateStep(); resetSubmitButton();
+      }, 2500);
+    } else {
+      showToast('Error parcial: ' + (result.errors || []).join(', '), 'warning');
+      downloadBackup(data);
+      resetSubmitButton();
+    }
+  })
+  .catch(function(err) {
+    showToast('Error de conexion. Descargando JSON de respaldo.', 'error');
+    downloadBackup(data);
+    resetSubmitButton();
+  });
 }
 
 
