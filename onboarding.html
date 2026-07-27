@@ -957,9 +957,9 @@ select{
   </div>
 
   <div style="background:#FFF;border:1px solid #EBEFED;border-radius:12px;padding:16px;margin:20px 0 0;text-align:center">
-    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#0E3B35;margin-bottom:6px">Al enviar, se abrirá el Google Form con los datos cargados</div>
-    <div style="font-size:11px;color:#8FA3AD;margin-bottom:10px">Solo tenés que verificar y hacer clic en Enviar → datos al Sheet y Drive</div>
-    <a href="#" onclick="var d={};document.querySelectorAll('[name]').forEach(function(e){if(e.name)d[e.name]=e.type==='checkbox'?(e.checked?'Sí':'No'):e.value});window.open(buildPrefilledUrl(d),'_blank');return false" style="display:inline-block;padding:10px 20px;background:#FFF;color:#2A7A63;border:1.5px solid #2A7A63;border-radius:8px;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px">Abrir Google Form →</a>
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#0E3B35;margin-bottom:6px">Al enviar, se abrirá tu app de email con todo listo</div>
+    <div style="font-size:11px;color:#8FA3AD;margin-bottom:10px">Solo tocá Enviar en el email. Adjuntá archivos Excel/CSV del cliente.</div>
+    <a href="#" onclick="var data={};document.querySelectorAll('[name]').forEach(function(e){if(e.name)data[e.name]=e.type==='checkbox'?(e.checked?'Sí':'No'):e.value});var s='BetterMin Onboarding - '+(data.cliente||'');window.location.href='mailto:?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(buildEmailBody(data));return false" style="display:inline-block;padding:10px 20px;background:#FFF;color:#2A7A63;border:1.5px solid #2A7A63;border-radius:8px;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px">Abrir Google Form →</a>
   </div>
 
   <div class="btn-row">
@@ -1260,102 +1260,100 @@ function submitForm() {
   });
   
   if (!data.cliente || !data.cliente.trim()) {
-    showToast('⚠️ El nombre del cliente es obligatorio', 'warning');
+    showToast('El nombre del cliente es obligatorio', 'warning');
     currentStep = 1; updateStep();
     return;
   }
   
-  // ── Guardar borrador y descargar respaldo ──
+  // Guardar y descargar JSON
   saveDraft();
   downloadBackup(data);
   
-  // ── Abrir Google Form con datos precargados ──
-  var url = buildPrefilledUrl(data);
-  showToast('✅ Abriendo Google Form con los datos cargados. Solo hacé clic en Enviar.', 'success');
+  // Construir email con todos los datos
+  var subject = 'BetterMin Onboarding - ' + (data.cliente || 'Sin nombre') + ' - ' + (data.planta || 'Sin planta');
+  var body = buildEmailBody(data);
+  
+  // Abrir cliente de email
+  var mailto = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  
+  showToast('Abriendo email con todos los datos. Solo toca Enviar.', 'success');
+  
+  var submitBtn = document.getElementById('submitBtn');
+  var submitText = document.getElementById('submitText');
+  submitBtn.disabled = true;
+  submitText.textContent = 'Abriendo email...';
   
   setTimeout(function() {
-    window.open(url, '_blank');
-  }, 500);
-  
-  // Reset form
-  var submitBtn = document.getElementById('submitBtn');
-  submitBtn.disabled = true;
-  document.getElementById('submitText').textContent = '✓ Abriendo Google Form...';
+    window.location.href = mailto;
+  }, 400);
 }
 
-function buildPrefilledUrl(data) {
-  var base = 'https://docs.google.com/forms/d/e/1FAIpQLSdoUcAcrcETW0jRkS5k2mfHmPJ6zXMnqAIL0v1j1y7u9VwfEg/viewform?usp=pp_url';
+function buildEmailBody(data) {
+  var lines = [];
+  lines.push('=== BETTERMIN — ONBOARDING DE DATOS EN TERRENO ===');
+  lines.push('');
+  lines.push('IDENTIFICACION');
+  lines.push('  Cliente: ' + (data.cliente || '-'));
+  lines.push('  Planta: ' + (data.planta || '-'));
+  lines.push('  Fecha: ' + (data.fechaVisita || '-'));
+  lines.push('  Contacto: ' + (data.contactoNombre || '-') + ' / ' + (data.contactoCargo || '-'));
+  lines.push('  Email: ' + (data.contactoEmail || '-') + ' | Tel: ' + (data.contactoTel || '-'));
+  lines.push('  Tomado por: ' + (data.tomadoPor || '-'));
+  lines.push('');
+  lines.push('DATOS DE PLANTA');
+  lines.push('  Mineral: ' + (data.mineral || '-'));
+  lines.push('  Subproductos: ' + (data.subproductos || '-'));
+  lines.push('  Capacidad: ' + (data.capacidad || '-') + ' ton/dia');
+  lines.push('  Proceso: ' + (data.tipoProceso || '-'));
+  lines.push('  Lineas: ' + (data.numLineas || '-') + ' | Horas: ' + (data.horasOp || '-'));
+  lines.push('');
+  lines.push('EQUIPAMIENTO');
+  lines.push('  Flowsheet: ' + (data.equipos || '-'));
+  lines.push('  Molienda: ' + (data.circuitoMolienda || '-'));
+  lines.push('  Celdas: ' + (data.celdasFlotacion || '-'));
+  lines.push('  Espesador: ' + (data.tieneEspesador || '-'));
+  lines.push('  Lixiviacion: ' + (data.tieneLixiviacion || '-'));
+  lines.push('  Reactivos: ' + (data.reactivos || '-'));
+  lines.push('  pH: ' + (data.rangoPH || '-'));
+  lines.push('');
+  lines.push('SENSORES');
+  lines.push('  Flujo: ' + (data.sensorFlujo || 'No') + ' | pH: ' + (data.sensorPH || 'No'));
+  lines.push('  Densidad: ' + (data.sensorDensidad || 'No') + ' | Analizador: ' + (data.analizadorLinea || 'No'));
+  lines.push('  Recuperacion: ' + (data.mideRecuperacion || 'No') + ' | Tonelaje: ' + (data.tonelajeOnline || 'No'));
+  lines.push('  PSD: ' + (data.psd || 'No'));
+  lines.push('  SCADA: ' + (data.scada || '-'));
+  lines.push('');
+  lines.push('HISTORIAL DE DATOS');
+  lines.push('  Base historica: ' + (data.baseHistorica || '-'));
+  lines.push('  Tipo DB: ' + (data.tipoDB || '-'));
+  lines.push('  Historial: ' + (data.mesesHistorial || '-'));
+  lines.push('  Frecuencia: ' + (data.frecuenciaCaptura || '-'));
+  lines.push('  Formato: ' + (data.formatoDatos || '-'));
+  lines.push('  Calidad: ' + (data.calidadDatos || '-') + '/5');
+  lines.push('  Comparte: ' + (data.comparteDatos || '-'));
+  lines.push('');
+  lines.push('MINERALOGIA Y LAB');
+  lines.push('  Ley cabeza: ' + (data.leyCabeza || '-'));
+  lines.push('  Variabilidad: ' + (data.variabilidad || '-'));
+  lines.push('  Dureza: ' + (data.dureza || '-'));
+  lines.push('  QEMSCAN: ' + (data.qemscan || '-'));
+  lines.push('  Muestreo: ' + (data.frecMuestreo || '-'));
+  lines.push('  Analisis: ' + (data.analisisLab || '-'));
+  lines.push('  QC: ' + (data.estandaresQC || '-'));
+  lines.push('  Reportes: ' + (data.formatoReportes || '-'));
+  lines.push('');
+  lines.push('IT Y ACCESO');
+  lines.push('  Acceso SCADA: ' + (data.accesoScada || '-'));
+  lines.push('  Red/Servidor: ' + (data.redServidor || '-'));
+  lines.push('  Admin IT: ' + (data.adminIT || '-'));
+  lines.push('  Links archivos: ' + (data.archivosLinks || '-'));
+  lines.push('');
+  lines.push('NOTAS');
+  lines.push('  ' + (data.notas || 'Sin notas'));
+  lines.push('');
+  lines.push('=== ADJUNTAR ARCHIVOS EXCEL/CSV DEL CLIENTE A ESTE EMAIL ===');
   
-  var mapping = {
-    'entry.1028607393': data.cliente,
-    'entry.23989800': data.planta,
-    'entry.1040788426': data.fechaVisita,
-    'entry.1326686572': data.contactoNombre,
-    'entry.134388077': data.contactoCargo,
-    'entry.80378442': data.contactoEmail,
-    'entry.2028295291': data.contactoTel,
-    'entry.1130168438': data.tomadoPor,
-    'entry.522682565': data.mineral,
-    'entry.706974421': data.subproductos,
-    'entry.1306662362': data.capacidad,
-    'entry.300959903': data.tipoProceso,
-    'entry.1028431131': data.numLineas,
-    'entry.81130636': data.horasOp,
-    'entry.362344841': data.equipos,
-    'entry.1858989868': data.circuitoMolienda,
-    'entry.964775507': data.celdasFlotacion,
-    'entry.278383234': data.tieneEspesador,
-    'entry.2080903405': data.tieneLixiviacion,
-    'entry.1667666602': data.reactivos,
-    'entry.862956780': data.rangoPH,
-    'entry.1098393854': data.scada,
-    'entry.568824844': data.baseHistorica,
-    'entry.738633335': data.tipoDB,
-    'entry.706245629': data.mesesHistorial,
-    'entry.2114685251': data.frecuenciaCaptura,
-    'entry.1327787699': data.formatoDatos,
-    'entry.709234448': data.calidadDatos,
-    'entry.1696076877': data.comparteDatos,
-    'entry.1960767109': data.leyCabeza,
-    'entry.1495282369': data.variabilidad,
-    'entry.1973535662': data.dureza,
-    'entry.1092034644': data.qemscan,
-    'entry.328038588': data.frecMuestreo,
-    'entry.1052872367': data.analisisLab,
-    'entry.1427649170': data.estandaresQC,
-    'entry.199951514': data.formatoReportes,
-    'entry.1550443220': data.accesoScada,
-    'entry.1521586839': data.redServidor,
-    'entry.841114787': data.adminIT,
-    'entry.498148882': data.archivosLinks,
-    'entry.1520773381': data.notas
-  };
-  
-  var params = [];
-  for (var key in mapping) {
-    var val = mapping[key];
-    if (val && val !== '') {
-      params.push(key + '=' + encodeURIComponent(val));
-    }
-  }
-  
-  // Sensor checkboxes
-  var sensorChecks = {
-    'sensorFlujo': 'Sensor de Flujo',
-    'sensorPH': 'Sensor de pH Online',
-    'sensorDensidad': 'Sensor de Densidad',
-    'analizadorLinea': 'Analizador en Linea (Courier/LIX/XRF)',
-    'mideRecuperacion': 'Medicion de Recuperacion',
-    'tonelajeOnline': 'Tonelaje Online (balanza en correa)',
-    'psd': 'Granulometria Online / PSD (Malvern/Metso)'
-  };
-  for (var sk in sensorChecks) {
-    if (data[sk] === 'Sí') {
-      params.push('entry.1209463067=' + encodeURIComponent(sensorChecks[sk]));
-    }
-  }
-  
-  return base + '&' + params.join('&');
+  return lines.join('\n');
 }
 
 
