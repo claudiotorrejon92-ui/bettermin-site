@@ -1267,6 +1267,9 @@ function submitForm() {
   
   saveDraft();
   
+  // Include uploaded files in payload
+  data.archivos = uploadedFiles;
+  
   var submitBtn = document.getElementById('submitBtn');
   var submitText = document.getElementById('submitText');
   var submitLoader = document.getElementById('submitLoader');
