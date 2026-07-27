@@ -981,7 +981,7 @@ select{
 // ═══════════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════════
-const APPS_SCRIPT_URL = '{{APPS_SCRIPT_URL}}'; // ← Se reemplaza al deployar
+// Datos enviados directamente a Google Form (→ Sheet + Drive)
 const TOTAL_STEPS = 7;
 const STEP_LABELS = ['Identificación', 'Planta', 'Equipamiento', 'Sensores', 'Historial Datos', 'Mineralogía & Lab', 'IT & Archivos'];
 const STORAGE_KEY = 'bettermin_onboarding_draft';
@@ -1248,7 +1248,6 @@ function submitForm() {
   var form = document.getElementById('onboardingForm');
   var data = {};
   
-  // Collect all values
   form.querySelectorAll('input, select, textarea').forEach(function(el) {
     if (!el.name) return;
     if (el.type === 'checkbox') {
@@ -1260,27 +1259,21 @@ function submitForm() {
     }
   });
   
-  // Add files
   data.archivos = uploadedFiles;
   
-  // Validate required
   if (!data.cliente || !data.cliente.trim()) {
     showToast('⚠️ El nombre del cliente es obligatorio', 'warning');
-    // Go back to step 1
-    currentStep = 1;
-    updateStep();
+    currentStep = 1; updateStep();
     document.querySelector('[name="cliente"]').focus();
     return;
   }
   
   if (!data.baseHistorica) {
     showToast('⚠️ Indica si tienen base de datos histórica (Paso 5)', 'warning');
-    currentStep = 5;
-    updateStep();
+    currentStep = 5; updateStep();
     return;
   }
   
-  // Show loading
   var submitBtn = document.getElementById('submitBtn');
   var submitText = document.getElementById('submitText');
   var submitLoader = document.getElementById('submitLoader');
@@ -1288,65 +1281,88 @@ function submitForm() {
   submitText.style.display = 'none';
   submitLoader.style.display = 'inline';
   
-  // Send to Apps Script
-  var url = APPS_SCRIPT_URL;
-  if (!url || url === '{{APPS_SCRIPT_URL}}') {
-    // Fallback: download as JSON
-    showToast('⚠️ URL del backend no configurada. Descargando respaldo JSON...', 'warning');
-    downloadBackup(data);
-    resetSubmitButton();
-    return;
+  sendToGoogleForm(data, function(success) {
+    if (success) {
+      showToast('✅ Datos enviados al Sheet y Drive', 'success');
+      localStorage.removeItem(STORAGE_KEY);
+      uploadedFiles = []; renderFileList();
+      setTimeout(function() {
+        form.reset(); currentStep = 1; updateStep(); resetSubmitButton();
+      }, 2000);
+    } else {
+      showToast('⚠️ Error de envio. Descargando JSON de respaldo...', 'warning');
+      downloadBackup(data);
+      resetSubmitButton();
+    }
+  });
+}
+
+function sendToGoogleForm(data, callback) {
+  var entryMap = {
+    cliente:'1028607393', planta:'23989800', fechaVisita:'1040788426',
+    contactoNombre:'1326686572', contactoCargo:'134388077', contactoEmail:'80378442',
+    contactoTel:'2028295291', tomadoPor:'1130168438',
+    mineral:'522682565', subproductos:'706974421', capacidad:'1306662362',
+    tipoProceso:'300959903', numLineas:'1028431131', horasOp:'81130636',
+    equipos:'362344841', circuitoMolienda:'1858989868', celdasFlotacion:'964775507',
+    tieneEspesador:'278383234', tieneLixiviacion:'2080903405',
+    reactivos:'1667666602', rangoPH:'862956780',
+    scada:'1098393854',
+    baseHistorica:'568824844', tipoDB:'738633335', mesesHistorial:'706245629',
+    frecuenciaCaptura:'2114685251', formatoDatos:'1327787699',
+    calidadDatos:'709234448', comparteDatos:'1696076877',
+    leyCabeza:'1960767109', variabilidad:'1495282369', dureza:'1973535662',
+    qemscan:'1092034644', frecMuestreo:'328038588', analisisLab:'1052872367',
+    estandaresQC:'1427649170', formatoReportes:'199951514',
+    accesoScada:'1550443220', redServidor:'1521586839', adminIT:'841114787',
+    archivosLinks:'498148882', notas:'1520773381'
+  };
+  var sensorEntryId = '1209463067';
+  var sensorValues = {
+    sensorFlujo:'Sensor de Flujo', sensorPH:'Sensor de pH Online',
+    sensorDensidad:'Sensor de Densidad', analizadorLinea:'Analizador en Linea (Courier/LIX/XRF)',
+    mideRecuperacion:'Medicion de Recuperacion', tonelajeOnline:'Tonelaje Online (balanza en correa)',
+    psd:'Granulometria Online / PSD (Malvern/Metso)'
+  };
+  var formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdoUcAcrcETW0jRkS5k2mfHmPJ6zXMnqAIL0v1j1y7u9VwfEg/formResponse';
+  
+  var iframe = document.getElementById('googleFormIframe');
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id = 'googleFormIframe'; iframe.name = 'googleFormIframe';
+    iframe.style.display = 'none'; document.body.appendChild(iframe);
   }
   
-  fetch(url, {
-    method: 'POST',
-    mode: 'no-cors', // Apps Script redirects
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
-  .then(function(response) {
-    return response.text();
-  })
-  .then(function(text) {
-    try {
-      var result = JSON.parse(text);
-      if (result.status === 'ok') {
-        showToast('✅ Datos enviados correctamente', 'success');
-        // Clear draft
-        localStorage.removeItem(STORAGE_KEY);
-        uploadedFiles = [];
-        renderFileList();
-        // Reset form after 2 seconds
-        setTimeout(function() {
-          form.reset();
-          currentStep = 1;
-          updateStep();
-          resetSubmitButton();
-        }, 2000);
-      } else {
-        showToast('⚠️ ' + (result.error || 'Error desconocido'), 'error');
-        downloadBackup(data);
-        resetSubmitButton();
-      }
-    } catch(e) {
-      // no-cors mode can't read response — assume success if no error thrown
-      showToast('✅ Datos enviados (verificar en Sheet)', 'success');
-      localStorage.removeItem(STORAGE_KEY);
-      uploadedFiles = [];
-      renderFileList();
-      setTimeout(function() {
-        form.reset();
-        currentStep = 1;
-        updateStep();
-        resetSubmitButton();
-      }, 2000);
+  var pf = document.getElementById('googleFormProxy');
+  if (!pf) {
+    pf = document.createElement('form');
+    pf.id = 'googleFormProxy'; pf.method = 'POST';
+    pf.action = formUrl; pf.target = 'googleFormIframe';
+    pf.style.display = 'none'; document.body.appendChild(pf);
+  }
+  pf.innerHTML = '';
+  
+  for (var key in entryMap) {
+    if (entryMap.hasOwnProperty(key) && data[key] && data[key] !== '') {
+      var inp = document.createElement('input');
+      inp.type = 'hidden'; inp.name = 'entry.' + entryMap[key];
+      inp.value = data[key]; pf.appendChild(inp);
     }
-  })
-  .catch(function(err) {
-    showToast('❌ Error de conexión. Se descargó respaldo JSON.', 'error');
-    downloadBackup(data);
-    resetSubmitButton();
-  });
+  }
+  
+  for (var sk in sensorValues) {
+    if (sensorValues.hasOwnProperty(sk) && data[sk] === 'Sí') {
+      var cb = document.createElement('input');
+      cb.type = 'hidden'; cb.name = 'entry.' + sensorEntryId;
+      cb.value = sensorValues[sk]; pf.appendChild(cb);
+    }
+  }
+  
+  var sent = false;
+  var t = setTimeout(function() { if (!sent) { sent = true; callback(false); } }, 8000);
+  iframe.onload = function() { if (!sent) { sent = true; clearTimeout(t); callback(true); } };
+  
+  try { pf.submit(); } catch(e) { clearTimeout(t); callback(false); }
 }
 
 function resetSubmitButton() {
