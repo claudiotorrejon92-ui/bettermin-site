@@ -25,10 +25,12 @@ jobs:
         run: |
           mkdir -p dist
           cp index.html dist/
+          cp onboarding.html dist/ 2>/dev/null || true
           cp .nojekyll dist/ 2>/dev/null || true
           cp CNAME dist/ 2>/dev/null || true
           cp -r assets dist/ 2>/dev/null || true
           cp -r public dist/ 2>/dev/null || true
+          cp -r onboarding dist/ 2>/dev/null || true
           # Copy image files from root (hero, section photos)
           cp *.jpg dist/ 2>/dev/null || true
           cp *.jpeg dist/ 2>/dev/null || true
