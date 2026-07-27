@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BetterMin — Onboarding Datos en Terreno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════ RESET ═══════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',-apple-system,sans-serif;
+  background:#F5F7F6;
+  color:#1A1F23;
+  line-height:1.5;
+  min-height:100dvh;
+  touch-action:manipulation;
+}
+/* ═══════════════ HEADER ═══════════════ */
+.header{
+  background:#0E3B35;
+  color:#FFF;
+  padding:16px 20px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 2px 12px rgba(14,59,53,.25);
+}
+.header-logo{
+  height:36px;
+  width:auto;
+}
+.header-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:600;
+  font-size:16px;
+  line-height:1.2;
+}
+.header-sub{
+  font-size:11px;
+  color:rgba(255,255,255,.65);
+  font-weight:400;
+}
+/* ═══════════════ PROGRESS BAR ═══════════════ */
+.progress-wrap{
+  background:#0E3B35;
+  padding:0 20px 12px;
+  position:sticky;
+  top:68px;
+  z-index:99;
+}
+.progress-bar{
+  height:4px;
+  background:rgba(255,255,255,.15);
+  border-radius:2px;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background:#2A7A63;
+  border-radius:2px;
+  transition:width .35s cubic-bezier(.22,1,.36,1);
+}
+.progress-steps{
+  display:flex;
+  justify-content:space-between;
+  margin-top:6px;
+}
+.progress-step{
+  font-size:10px;
+  color:rgba(255,255,255,.45);
+  font-weight:500;
+  transition:color .3s;
+}
+.progress-step.active{color:#FFF}
+.progress-step.done{color:#2A7A63}
+/* ═══════════════ MAIN FORM ═══════════════ */
+.form-container{
+  max-width:680px;
+  margin:0 auto;
+  padding:20px 16px 120px;
+}
+.step{
+  display:none;
+  animation:fadeIn .35s ease;
+}
+.step.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* ═══════════════ SECTION HEAD ═══════════════ */
+.step-head{
+  margin-bottom:24px;
+}
+.step-number{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:#2A7A63;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:4px;
+}
+.step-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:22px;
+  color:#0E3B35;
+  line-height:1.25;
+}
+.step-desc{
+  font-size:13px;
+  color:#5A6E7E;
+  margin-top:4px;
+}
+/* ═══════════════ FORM FIELDS ═══════════════ */
+.field{
+  margin-bottom:16px;
+}
+.field-label{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  color:#3A4350;
+  margin-bottom:4px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.field-label .req{color:#C5942D}
+.field-hint{
+  font-size:11px;
+  color:#8FA3AD;
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:0;
+}
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+select,
+textarea{
+  width:100%;
+  padding:12px 14px;
+  border:1.5px solid #DDE2E0;
+  border-radius:8px;
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  color:#1A1F23;
+  background:#FFF;
+  transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;
+  appearance:none;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;
+  border-color:#2A7A63;
+  box-shadow:0 0 0 3px rgba(42,122,99,.1);
+}
+textarea{
+  min-height:80px;
+  resize:vertical;
+}
+select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A6E7E' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  padding-right:36px;
+}
+/* ═══════════════ CHECKBOX / RADIO ═══════════════ */
+.option-group{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.option-row{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:10px 12px;
+  background:#FFF;
+  border:1.5px solid #DDE2E0;
+  border-radius:8px;
+  cursor:pointer;
+  transition:border-color .2s,background .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.option-row:active{background:#F0F4F3}
+.option-row.selected{
+  border-color:#2A7A63;
+  background:#F0F8F5;
+}
+.option-row input[type="checkbox"],
+.option-row input[type="radio"]{
+  width:18px;
+  height:18px;
+  accent-color:#2A7A63;
+  flex-shrink:0;
+  margin-top:1px;
+}
+.option-text{
+  font-size:14px;
+  color:#1A1F23;
+  line-height:1.3;
+}
+.option-sub{
+  font-size:11px;
+  color:#8FA3AD;
+  display:block;
+}
+/* ═══════════════ RATING ═══════════════ */
+.rating-group{
+  display:flex;
+  gap:8px;
+}
+.rating-btn{
+  flex:1;
+  padding:12px 8px;
+  border:1.5px solid #DDE2E0;
+  border-radius:8px;
+  background:#FFF;
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  font-weight:600;
+  color:#5A6E7E;
+  cursor:pointer;
+  text-align:center;
+  transition:all .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.rating-btn:active,.rating-btn.selected{
+  border-color:#2A7A63;
+  background:#F0F8F5;
+  color:#0E3B35;
+}
+/* ═══════════════ FILE UPLOAD ═══════════════ */
+.file-upload{
+  border:2px dashed #DDE2E0;
+  border-radius:12px;
+  padding:28px 20px;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .2s,background .2s;
+  background:#FFF;
+}
+.file-upload:active,.file-upload.drag-over{
+  border-color:#2A7A63;
+  background:#F0F8F5;
+}
+.file-upload-icon{
+  font-size:32px;
+  margin-bottom:8px;
+}
+.file-upload-text{
+  font-size:13px;
+  color:#5A6E7E;
+  font-weight:500;
+}
+.file-upload-sub{
+  font-size:11px;
+  color:#8FA3AD;
+  margin-top:4px;
+}
+.file-list{
+  margin-top:12px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.file-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 12px;
+  background:#F0F8F5;
+  border-radius:8px;
+  font-size:13px;
+}
+.file-item-name{
+  color:#0E3B35;
+  font-weight:500;
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.file-item-size{
+  color:#8FA3AD;
+  font-size:11px;
+  margin-left:8px;
+  flex-shrink:0;
+}
+.file-item-remove{
+  background:none;
+  border:none;
+  color:#C5942D;
+  font-size:18px;
+  cursor:pointer;
+  padding:0 0 0 8px;
+  line-height:1;
+}
+/* ═══════════════ BUTTONS ═══════════════ */
+.btn-row{
+  display:flex;
+  gap:10px;
+  margin-top:28px;
+}
+.btn{
+  padding:14px 24px;
+  border:none;
+  border-radius:8px;
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:600;
+  font-size:15px;
+  cursor:pointer;
+  transition:all .2s;
+  -webkit-tap-highlight-color:transparent;
+  text-align:center;
+}
+.btn-primary{
+  background:#0E3B35;
+  color:#FFF;
+  flex:1;
+}
+.btn-primary:active{background:#0A2925}
+.btn-secondary{
+  background:transparent;
+  color:#5A6E7E;
+  border:1.5px solid #DDE2E0;
+}
+.btn-secondary:active{background:#F0F4F3}
+.btn-outline{
+  background:transparent;
+  color:#2A7A63;
+  border:1.5px solid #2A7A63;
+}
+.btn-outline:active{background:#F0F8F5}
+.btn:disabled{
+  opacity:.5;
+  pointer-events:none;
+}
+.btn-submit{
+  background:#2A7A63;
+  color:#FFF;
+  flex:1;
+  font-size:16px;
+  padding:16px 24px;
+}
+.btn-submit:active{background:#1F5E4B}
+/* ═══════════════ SUCCESS / ERROR ═══════════════ */
+.toast{
+  position:fixed;
+  bottom:24px;
+  left:16px;
+  right:16px;
+  max-width:680px;
+  margin:0 auto;
+  padding:14px 18px;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:500;
+  text-align:center;
+  z-index:200;
+  animation:slideUp .3s ease;
+  display:none;
+}
+.toast.show{display:block}
+.toast.success{background:#0E3B35;color:#FFF}
+.toast.error{background:#C5342D;color:#FFF}
+.toast.warning{background:#C5942D;color:#1A1F23}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+/* ═══════════════ SAVED INDICATOR ═══════════════ */
+.save-indicator{
+  font-size:10px;
+  color:#2A7A63;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  margin-top:20px;
+  opacity:0;
+  transition:opacity .3s;
+}
+.save-indicator.visible{opacity:1}
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media(min-width:768px){
+  .form-container{padding:32px 24px 120px}
+  .step-title{font-size:26px}
+  .header{padding:16px 24px}
+  .progress-wrap{padding:0 24px 12px}
+}
+/* ═══════════════ DARK MODE TOGGLE (invierno) ═══════════════ */
+.card-category{
+  background:#FFF;
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:16px;
+  border:1px solid #EBEFED;
+}
+.card-category-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:600;
+  font-size:14px;
+  color:#0E3B35;
+  margin-bottom:12px;
+  padding-bottom:8px;
+  border-bottom:1px solid #EBEFED;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <svg class="header-logo" viewBox="0 0 40 40" fill="none">
+    <rect width="40" height="40" rx="8" fill="#2A7A63"/>
+    <path d="M8 28V14l12 8-12 6zM20 22v8l12-6-12-2z" fill="#FFF"/>
+    <path d="M20 14v8l12-6-12-2z" fill="rgba(255,255,255,.7)"/>
+  </svg>
+  <div>
+    <div class="header-title">Onboarding de Datos</div>
+    <div class="header-sub">BetterMin — Levantamiento en Terreno</div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <div class="progress-steps" id="progressSteps"></div>
+</div>
+
+<!-- FORM -->
+<div class="form-container" id="formContainer">
+<form id="onboardingForm" novalidate>
+
+<!-- ═══════════ STEP 1: IDENTIFICACIÓN ═══════════ -->
+<div class="step active" data-step="1">
+  <div class="step-head">
+    <div class="step-number">Paso 1 de 7</div>
+    <div class="step-title">Identificación del Cliente</div>
+    <div class="step-desc">Datos básicos de la faena y contacto principal</div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Datos de la Planta</div>
+    <div class="field">
+      <label class="field-label">Nombre del Cliente / Empresa <span class="req">*</span></label>
+      <input type="text" name="cliente" required placeholder="Ej: Minera Los Pelambres">
+    </div>
+    <div class="field">
+      <label class="field-label">Planta / Faena</label>
+      <input type="text" name="planta" placeholder="Ej: Planta Concentradora Chacay">
+    </div>
+    <div class="field">
+      <label class="field-label">Fecha de Visita</label>
+      <input type="date" name="fechaVisita">
+    </div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Contacto en Faena</div>
+    <div class="field">
+      <label class="field-label">Nombre Completo</label>
+      <input type="text" name="contactoNombre" placeholder="Nombre del contacto principal">
+    </div>
+    <div class="field">
+      <label class="field-label">Cargo</label>
+      <input type="text" name="contactoCargo" placeholder="Ej: Superintendente de Metalurgia">
+    </div>
+    <div class="field">
+      <label class="field-label">Email</label>
+      <input type="email" name="contactoEmail" placeholder="contacto@empresa.com">
+    </div>
+    <div class="field">
+      <label class="field-label">Teléfono</label>
+      <input type="tel" name="contactoTel" placeholder="+56 9 ...">
+    </div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Equipo BetterMin</div>
+    <div class="field">
+      <label class="field-label">Datos Tomados por</label>
+      <select name="tomadoPor">
+        <option value="">Seleccionar...</option>
+        <option value="Claudio Torrejón">Claudio Torrejón</option>
+        <option value="Emilio Lazo">Emilio Lazo</option>
+        <option value="Guillermo Dearo">Guillermo Dearo</option>
+        <option value="Carlos Pérez Bozo">Carlos Pérez Bozo</option>
+        <option value="Gustavo Defilippi">Gustavo Defilippi</option>
+        <option value="Equipo Mixto">Equipo Mixto</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <div style="flex:1"></div>
+    <button type="button" class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+  </div>
+</div>
+
+<!-- ═══════════ STEP 2: DATOS DE PLANTA ═══════════ -->
+<div class="step" data-step="2">
+  <div class="step-head">
+    <div class="step-number">Paso 2 de 7</div>
+    <div class="step-title">Datos de Planta</div>
+    <div class="step-desc">Mineral, capacidad y tipo de proceso</div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Mineral y Capacidad</div>
+    <div class="field">
+      <label class="field-label">Mineral Principal <span class="req">*</span></label>
+      <select name="mineral" required>
+        <option value="">Seleccionar...</option>
+        <option value="Cobre (Cu)">Cobre (Cu)</option>
+        <option value="Hierro (Fe)">Hierro (Fe)</option>
+        <option value="Oro (Au)">Oro (Au)</option>
+        <option value="Molibdeno (Mo)">Molibdeno (Mo)</option>
+        <option value="Zinc (Zn)">Zinc (Zn)</option>
+        <option value="Plata (Ag)">Plata (Ag)</option>
+        <option value="Litio (Li)">Litio (Li)</option>
+        <option value="Mixto / Polimetálico">Mixto / Polimetálico</option>
+        <option value="Otro">Otro</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Subproductos</label>
+      <input type="text" name="subproductos" placeholder="Ej: Mo, Au, Ag">
+    </div>
+    <div class="field">
+      <label class="field-label">Capacidad de Procesamiento (ton/día)</label>
+      <input type="number" name="capacidad" placeholder="Ej: 50000" min="0">
+    </div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Proceso</div>
+    <div class="field">
+      <label class="field-label">Tipo de Proceso Principal</label>
+      <select name="tipoProceso">
+        <option value="">Seleccionar...</option>
+        <option value="Flotación">Flotación</option>
+        <option value="Lixiviación (SX-EW)">Lixiviación (SX-EW)</option>
+        <option value="Magnetismo">Magnetismo (Hierro)</option>
+        <option value="Flotación + Lixiviación">Flotación + Lixiviación</option>
+        <option value="Gravimetría">Gravimetría</option>
+        <option value="Mixto">Mixto</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">N° de Líneas / Circuitos</label>
+      <input type="text" name="numLineas" placeholder="Ej: 2 líneas de molienda-flotación">
+    </div>
+    <div class="field">
+      <label class="field-label">Horas de Operación al Día</label>
+      <select name="horasOp">
+        <option value="">Seleccionar...</option>
+        <option value="24/7 continuo">24/7 continuo</option>
+        <option value="12 hrs (2 turnos)">12 hrs (2 turnos)</option>
+        <option value="8 hrs (1 turno)">8 hrs (1 turno)</option>
+        <option value="Por campaña">Por campaña / Batch</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+    <button type="button" class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+  </div>
+</div>
+
+<!-- ═══════════ STEP 3: EQUIPAMIENTO ═══════════ -->
+<div class="step" data-step="3">
+  <div class="step-head">
+    <div class="step-number">Paso 3 de 7</div>
+    <div class="step-title">Flowsheet & Equipamiento</div>
+    <div class="step-desc">Equipos principales del flowsheet de planta</div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Equipos Principales</div>
+    <div class="field">
+      <label class="field-label">Equipos del Flowsheet <span class="field-hint">Listar equipos: chancador, molino SAG, molino bolas, hidrociclón, celdas rougher/cleaner/scavenger, etc.</span></label>
+      <textarea name="equipos" rows="3" placeholder="Ej: Chancador primario → Molino SAG 32' → Hidrociclón Krebs → Celdas Rougher OK-100 → Cleaner → Espesador 40m → ..."></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label">Circuito de Molienda</label>
+      <select name="circuitoMolienda">
+        <option value="">Seleccionar...</option>
+        <option value="SAG + Bolas (SABC)">SAG + Bolas (SABC)</option>
+        <option value="Solo SAG">Solo SAG</option>
+        <option value="Solo Bolas">Solo Bolas</option>
+        <option value="Chancado + Bolas">Chancado + Bolas (sin SAG)</option>
+        <option value="Vertimill / Torre">Vertimill / Molino Torre</option>
+        <option value="HPGR">HPGR (Rodillos)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Celdas de Flotación</label>
+      <input type="text" name="celdasFlotacion" placeholder="Ej: OK-100 (3 rougher, 2 cleaner, 2 scavenger)">
+    </div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Operaciones Complementarias</div>
+    <div class="field">
+      <label class="field-label">¿Tiene Espesador de Relaves?</label>
+      <select name="tieneEspesador">
+        <option value="">Seleccionar...</option>
+        <option value="Sí, convencional">Sí, convencional</option>
+        <option value="Sí, alta capacidad">Sí, alta capacidad / pasta</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">¿Tiene Circuito de Lixiviación?</label>
+      <select name="tieneLixiviacion">
+        <option value="">Seleccionar...</option>
+        <option value="Sí, pilas">Sí, lixiviación en pilas</option>
+        <option value="Sí, SX-EW">Sí, SX-EW completo</option>
+        <option value="Sí, ROM">Sí, ROM / Dump leaching</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Reactivos Principales</label>
+      <input type="text" name="reactivos" placeholder="Ej: Xantato, espumante, cal, NaSH, Floculante">
+    </div>
+    <div class="field">
+      <label class="field-label">Rango de pH Operativo</label>
+      <input type="text" name="rangoPH" placeholder="Ej: 9.5 - 11.5 (flotación), 1.8 - 2.2 (lixiviación)">
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+    <button type="button" class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+  </div>
+</div>
+
+<!-- ═══════════ STEP 4: SENSORES ═══════════ -->
+<div class="step" data-step="4">
+  <div class="step-head">
+    <div class="step-number">Paso 4 de 7</div>
+    <div class="step-title">Sensores & Instrumentación</div>
+    <div class="step-desc">¿Qué variables miden online y con qué equipos?</div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Sensores Disponibles</div>
+    <div class="option-group" id="sensorChecklist">
+      <label class="option-row">
+        <input type="checkbox" name="sensorFlujo" value="Sí">
+        <span class="option-text"><strong>Sensor de Flujo</strong><span class="option-sub">Electromagnético, másico, caudalímetro</span></span>
+      </label>
+      <label class="option-row">
+        <input type="checkbox" name="sensorPH" value="Sí">
+        <span class="option-text"><strong>Sensor de pH Online</strong><span class="option-sub">Electrodo, transmisor 4-20mA</span></span>
+      </label>
+      <label class="option-row">
+        <input type="checkbox" name="sensorDensidad" value="Sí">
+        <span class="option-text"><strong>Sensor de Densidad</strong><span class="option-sub">Densitómetro nuclear, másico</span></span>
+      </label>
+      <label class="option-row">
+        <input type="checkbox" name="analizadorLinea" value="Sí">
+        <span class="option-text"><strong>Analizador en Línea</strong><span class="option-sub">Courier, LIX, XRF, neutrónico</span></span>
+      </label>
+      <label class="option-row">
+        <input type="checkbox" name="mideRecuperacion" value="Sí">
+        <span class="option-text"><strong>Medición de Recuperación</strong><span class="option-sub">Balance de masa automatizado</span></span>
+      </label>
+      <label class="option-row">
+        <input type="checkbox" name="tonelajeOnline" value="Sí">
+        <span class="option-text"><strong>Tonelaje Online</strong><span class="option-sub">Balanza en correa, belt scale</span></span>
+      </label>
+      <label class="option-row">
+        <input type="checkbox" name="psd" value="Sí">
+        <span class="option-text"><strong>Granulometría Online (PSD)</strong><span class="option-sub">Malvern, Metso PSI, ultrasonido</span></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Sistema de Control</div>
+    <div class="field">
+      <label class="field-label">SCADA / PI System / Historiador</label>
+      <select name="scada">
+        <option value="">Seleccionar...</option>
+        <option value="PI System (Aveva/OSIsoft)">PI System (Aveva/OSIsoft)</option>
+        <option value="SCADA (Wonderware, Citect, etc)">SCADA (Wonderware, Citect, etc.)</option>
+        <option value="DCS (ABB, Siemens, Yokogawa)">DCS (ABB, Siemens, Yokogawa)</option>
+        <option value="OPC server sin historiador">OPC server (sin historiador)</option>
+        <option value="Ninguno — solo planillas">Ninguno — solo planillas / papel</option>
+        <option value="No se sabe / Por confirmar">No se sabe / Por confirmar</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+    <button type="button" class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+  </div>
+</div>
+
+<!-- ═══════════ STEP 5: HISTORIAL DE DATOS ═══════════ -->
+<div class="step" data-step="5">
+  <div class="step-head">
+    <div class="step-number">Paso 5 de 7</div>
+    <div class="step-title">Historial de Datos</div>
+    <div class="step-desc">Base de datos histórica, frecuencia y calidad</div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Base de Datos</div>
+    <div class="field">
+      <label class="field-label">¿Tienen Base de Datos Histórica? <span class="req">*</span></label>
+      <select name="baseHistorica" required>
+        <option value="">Seleccionar...</option>
+        <option value="Sí, con más de 12 meses">Sí, con más de 12 meses de datos</option>
+        <option value="Sí, entre 3-12 meses">Sí, entre 3 y 12 meses</option>
+        <option value="Sí, menos de 3 meses">Sí, menos de 3 meses</option>
+        <option value="No, datos en planillas sueltas">No — datos en planillas sueltas</option>
+        <option value="No, no tienen datos digitales">No — no tienen datos digitales</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Tipo de Base de Datos</label>
+      <select name="tipoDB">
+        <option value="">Seleccionar...</option>
+        <option value="SQL Server">SQL Server</option>
+        <option value="Oracle">Oracle</option>
+        <option value="MySQL / PostgreSQL">MySQL / PostgreSQL</option>
+        <option value="PI Historian (Aveva)">PI Historian (Aveva/OSIsoft)</option>
+        <option value="Excel / CSV">Solo Excel / CSV</option>
+        <option value="Access / FoxPro">Access / FoxPro (legado)</option>
+        <option value="No tienen / No se sabe">No tienen / No se sabe</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Meses/Años de Historial Disponible</label>
+      <input type="text" name="mesesHistorial" placeholder="Ej: 3 años, 18 meses, desde 2022">
+    </div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Frecuencia y Calidad</div>
+    <div class="field">
+      <label class="field-label">Frecuencia de Captura de Datos</label>
+      <select name="frecuenciaCaptura">
+        <option value="">Seleccionar...</option>
+        <option value="1 minuto o menos">≤ 1 minuto (online)</option>
+        <option value="5-15 minutos">5–15 minutos</option>
+        <option value="1 hora">1 hora</option>
+        <option value="Por turno (8-12 hrs)">Por turno (8–12 hrs)</option>
+        <option value="Diario">Diario</option>
+        <option value="Manual / Sin frecuencia fija">Manual / Sin frecuencia fija</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Formato en que Pueden Entregar Datos</label>
+      <select name="formatoDatos">
+        <option value="">Seleccionar...</option>
+        <option value="Excel (.xlsx)">Excel (.xlsx)</option>
+        <option value="CSV">CSV</option>
+        <option value="Acceso SQL directo">Acceso SQL directo</option>
+        <option value="PDF / Papel">PDF / Papel (requiere digitalización)</option>
+        <option value="API / OPC">API / OPC</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Calidad Percibida de los Datos</label>
+      <div class="rating-group" id="calidadRating">
+        <button type="button" class="rating-btn" data-value="1">1<br><small>Malo</small></button>
+        <button type="button" class="rating-btn" data-value="2">2</button>
+        <button type="button" class="rating-btn" data-value="3">3<br><small>Regular</small></button>
+        <button type="button" class="rating-btn" data-value="4">4</button>
+        <button type="button" class="rating-btn" data-value="5">5<br><small>Excelente</small></button>
+      </div>
+      <input type="hidden" name="calidadDatos" value="">
+    </div>
+    <div class="field">
+      <label class="field-label">¿El Cliente Puede/Quiere Compartir Datos Históricos?</label>
+      <select name="comparteDatos">
+        <option value="">Seleccionar...</option>
+        <option value="Sí, sin restricciones">Sí, sin restricciones</option>
+        <option value="Sí, requiere NDA">Sí, requiere NDA previo</option>
+        <option value="Sí, procesamiento local">Sí, pero solo procesamiento local</option>
+        <option value="No — reservas del cliente">No — el cliente tiene reservas</option>
+        <option value="Aún no se ha conversado">Aún no se ha conversado</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+    <button type="button" class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+  </div>
+</div>
+
+<!-- ═══════════ STEP 6: MINERALOGÍA + LAB ═══════════ -->
+<div class="step" data-step="6">
+  <div class="step-head">
+    <div class="step-number">Paso 6 de 7</div>
+    <div class="step-title">Mineralogía & Laboratorio</div>
+    <div class="step-desc">Datos geológicos, leyes y control de calidad</div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Mineralogía y Geología</div>
+    <div class="field">
+      <label class="field-label">Ley de Cabeza Típica</label>
+      <input type="text" name="leyCabeza" placeholder="Ej: Cu 0.6%, Fe 45%, Au 0.8 g/t">
+    </div>
+    <div class="field">
+      <label class="field-label">¿Hay Variabilidad de Zona / Tipo de Mineral?</label>
+      <select name="variabilidad">
+        <option value="">Seleccionar...</option>
+        <option value="Sí, alta variabilidad (varias zonas)">Sí, alta variabilidad (varias zonas/mina)</option>
+        <option value="Sí, moderada">Sí, moderada (2-3 tipos de mineral)</option>
+        <option value="Baja — mineral homogéneo">Baja — mineral relativamente homogéneo</option>
+        <option value="No se sabe">No se sabe</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">¿Tienen Datos de Dureza? (F80, P80, Wi, BWI)</label>
+      <select name="dureza">
+        <option value="">Seleccionar...</option>
+        <option value="Sí, medición regular">Sí, medición regular</option>
+        <option value="Sí, datos puntuales">Sí, datos puntuales / estudio antiguo</option>
+        <option value="No">No</option>
+        <option value="No se sabe">No se sabe</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">¿Tienen QEMSCAN / Mineralogía Cuantitativa?</label>
+      <select name="qemscan">
+        <option value="">Seleccionar...</option>
+        <option value="Sí, QEMSCAN/MLA regular">Sí, QEMSCAN/MLA regular</option>
+        <option value="Sí, estudios puntuales">Sí, estudios puntuales</option>
+        <option value="Solo microscopía óptica">Solo microscopía óptica</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Laboratorio y QC</div>
+    <div class="field">
+      <label class="field-label">Frecuencia de Muestreo de Laboratorio</label>
+      <select name="frecMuestreo">
+        <option value="">Seleccionar...</option>
+        <option value="Cada 1-2 horas">Cada 1–2 horas</option>
+        <option value="Por turno (8-12 hrs)">Por turno (8–12 hrs)</option>
+        <option value="Diario (1-2 compósitos)">Diario (1–2 compósitos/día)</option>
+        <option value="Semanal">Semanal</option>
+        <option value="Sin frecuencia fija">Sin frecuencia fija</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Análisis que Realizan</label>
+      <input type="text" name="analisisLab" placeholder="Ej: CuT, CuS, Fe, Mo, malla, P80">
+    </div>
+    <div class="field">
+      <label class="field-label">¿Usan Estándares QC? (blancos, duplicados, CRM)</label>
+      <select name="estandaresQC">
+        <option value="">Seleccionar...</option>
+        <option value="Sí, protocolo completo">Sí, protocolo completo (CRM, blancos, duplicados)</option>
+        <option value="Sí, básico">Sí, control básico</option>
+        <option value="No">No</option>
+        <option value="No se sabe">No se sabe</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Formato de Reportes de Laboratorio</label>
+      <select name="formatoReportes">
+        <option value="">Seleccionar...</option>
+        <option value="Excel / CSV">Excel / CSV</option>
+        <option value="LIMS integrado">LIMS integrado a DB</option>
+        <option value="PDF">PDF</option>
+        <option value="Papel">Papel / Libreta</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+    <button type="button" class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+  </div>
+</div>
+
+<!-- ═══════════ STEP 7: IT + ARCHIVOS + NOTAS ═══════════ -->
+<div class="step" data-step="7">
+  <div class="step-head">
+    <div class="step-number">Paso 7 de 7</div>
+    <div class="step-title">IT, Archivos & Notas</div>
+    <div class="step-desc">Infraestructura tecnológica, archivos del cliente y observaciones</div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Infraestructura IT</div>
+    <div class="field">
+      <label class="field-label">¿Tenemos Acceso al SCADA / PI?</label>
+      <select name="accesoScada">
+        <option value="">Seleccionar...</option>
+        <option value="Sí, acceso confirmado">Sí, acceso confirmado</option>
+        <option value="En proceso de solicitud">En proceso de solicitud</option>
+        <option value="No — requiere gestión">No — requiere gestión adicional</option>
+        <option value="No aplica (sin SCADA)">No aplica (no tienen SCADA)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">¿Hay Red / Servidor en Planta?</label>
+      <select name="redServidor">
+        <option value="">Seleccionar...</option>
+        <option value="Sí, servidor con acceso remoto">Sí, servidor con acceso remoto</option>
+        <option value="Sí, solo red local">Sí, solo red local</option>
+        <option value="No — sin infraestructura">No — sin infraestructura de red</option>
+        <option value="Cloud (AWS/Azure)">Cloud (AWS/Azure/GCP)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Contacto Admin IT / Automatización</label>
+      <input type="text" name="adminIT" placeholder="Nombre y email del responsable IT">
+    </div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Archivos del Cliente</div>
+    <div class="file-upload" id="fileDropZone" onclick="document.getElementById('fileInput').click()">
+      <div class="file-upload-icon">📁</div>
+      <div class="file-upload-text">Subir archivos de datos (Excel, CSV, PDF)</div>
+      <div class="file-upload-sub">Máx 20 MB por archivo · Se guardan en Drive del cliente</div>
+      <input type="file" id="fileInput" multiple accept=".xlsx,.xls,.csv,.pdf,.txt,.json,.xml" style="display:none" onchange="handleFiles(this.files)">
+    </div>
+    <div class="file-list" id="fileList"></div>
+    <div class="field" style="margin-top:12px">
+      <label class="field-label">Links a Archivos Compartidos <span class="field-hint">Drive, Dropbox, OneDrive, etc.</span></label>
+      <input type="text" name="archivosLinks" placeholder="https://drive.google.com/..., https://dropbox.com/...">
+    </div>
+  </div>
+
+  <div class="card-category">
+    <div class="card-category-title">Notas y Observaciones</div>
+    <div class="field">
+      <textarea name="notas" rows="3" placeholder="Observaciones generales, impresiones de la visita, urgencias, riesgos detectados, próximos pasos acordados..."></textarea>
+    </div>
+  </div>
+
+  <div class="save-indicator" id="saveIndicator">
+    <span>✓</span> Borrador guardado localmente
+  </div>
+
+  <div class="btn-row">
+    <button type="button" class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+    <button type="button" class="btn btn-submit" id="submitBtn" onclick="submitForm()">
+      <span id="submitText">Enviar Onboarding ✓</span>
+      <span id="submitLoader" style="display:none">Enviando...</span>
+    </button>
+  </div>
+</div>
+
+</form>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════
+const APPS_SCRIPT_URL = '{{APPS_SCRIPT_URL}}'; // ← Se reemplaza al deployar
+const TOTAL_STEPS = 7;
+const STEP_LABELS = ['Identificación', 'Planta', 'Equipamiento', 'Sensores', 'Historial Datos', 'Mineralogía & Lab', 'IT & Archivos'];
+const STORAGE_KEY = 'bettermin_onboarding_draft';
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let currentStep = 1;
+let uploadedFiles = []; // {name, size, mimeType, content (base64)}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+  buildProgressSteps();
+  restoreDraft();
+  setupOptionToggles();
+  setupRatingButtons();
+  setupFileDrop();
+  updateStep();
+  
+  // Auto-save on any input change
+  document.getElementById('onboardingForm').addEventListener('input', debounce(saveDraft, 500));
+  document.getElementById('onboardingForm').addEventListener('change', debounce(saveDraft, 500));
+});
+
+// ═══════════════════════════════════════════
+// PROGRESS BAR
+// ═══════════════════════════════════════════
+function buildProgressSteps() {
+  var container = document.getElementById('progressSteps');
+  var html = '';
+  for (var i = 1; i <= TOTAL_STEPS; i++) {
+    html += '<span class="progress-step" data-ps="' + i + '">' + i + '</span>';
+  }
+  container.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function updateStep() {
+  // Hide all steps
+  document.querySelectorAll('.step').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  // Show current
+  var stepEl = document.querySelector('.step[data-step="' + currentStep + '"]');
+  if (stepEl) stepEl.classList.add('active');
+  
+  // Progress bar
+  var pct = ((currentStep - 1) / TOTAL_STEPS) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  
+  // Step labels
+  document.querySelectorAll('.progress-step').forEach(function(el) {
+    var s = parseInt(el.getAttribute('data-ps'));
+    el.classList.remove('active', 'done');
+    if (s === currentStep) el.classList.add('active');
+    if (s < currentStep) el.classList.add('done');
+  });
+  
+  window.scrollTo(0, 0);
+  saveDraft();
+}
+
+function nextStep() {
+  if (currentStep < TOTAL_STEPS) {
+    currentStep++;
+    updateStep();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    updateStep();
+  }
+}
+
+// ═══════════════════════════════════════════
+// OPTION TOGGLES (visual feedback for checkboxes)
+// ═══════════════════════════════════════════
+function setupOptionToggles() {
+  document.querySelectorAll('.option-row input[type="checkbox"]').forEach(function(input) {
+    input.addEventListener('change', function() {
+      if (this.checked) {
+        this.closest('.option-row').classList.add('selected');
+      } else {
+        this.closest('.option-row').classList.remove('selected');
+      }
+    });
+  });
+}
+
+// ═══════════════════════════════════════════
+// RATING BUTTONS
+// ═══════════════════════════════════════════
+function setupRatingButtons() {
+  document.querySelectorAll('.rating-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var group = this.parentElement;
+      group.querySelectorAll('.rating-btn').forEach(function(b) {
+        b.classList.remove('selected');
+      });
+      this.classList.add('selected');
+      var hidden = group.parentElement.querySelector('input[type="hidden"]');
+      if (hidden) hidden.value = this.getAttribute('data-value');
+    });
+  });
+}
+
+// ═══════════════════════════════════════════
+// FILE HANDLING
+// ═══════════════════════════════════════════
+function setupFileDrop() {
+  var zone = document.getElementById('fileDropZone');
+  
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    zone.classList.add('drag-over');
+  });
+  
+  zone.addEventListener('dragleave', function() {
+    zone.classList.remove('drag-over');
+  });
+  
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    handleFiles(e.dataTransfer.files);
+  });
+}
+
+function handleFiles(files) {
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    if (file.size > 20 * 1024 * 1024) {
+      showToast('Archivo "' + file.name + '" excede 20 MB. Se omitirá.', 'warning');
+      continue;
+    }
+    
+    var reader = new FileReader();
+    reader.onload = (function(f) {
+      return function(e) {
+        uploadedFiles.push({
+          name: f.name,
+          size: f.size,
+          mimeType: f.type || 'application/octet-stream',
+          content: e.target.result.split(',')[1] // base64 sin el prefijo
+        });
+        renderFileList();
+      };
+    })(file);
+    reader.readAsDataURL(file);
+  }
+}
+
+function removeFile(index) {
+  uploadedFiles.splice(index, 1);
+  renderFileList();
+}
+
+function renderFileList() {
+  var list = document.getElementById('fileList');
+  var html = '';
+  for (var i = 0; i < uploadedFiles.length; i++) {
+    var f = uploadedFiles[i];
+    var sizeStr = f.size < 1024 * 1024 ? (f.size / 1024).toFixed(1) + ' KB' : (f.size / (1024 * 1024)).toFixed(1) + ' MB';
+    html += '<div class="file-item">' +
+      '<span class="file-item-name">' + escapeHtml(f.name) + '</span>' +
+      '<span class="file-item-size">' + sizeStr + '</span>' +
+      '<button class="file-item-remove" onclick="removeFile(' + i + ')" type="button">×</button>' +
+    '</div>';
+  }
+  list.innerHTML = html;
+}
+
+function escapeHtml(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+// ═══════════════════════════════════════════
+// SAVE / RESTORE DRAFT (localStorage)
+// ═══════════════════════════════════════════
+function saveDraft() {
+  var form = document.getElementById('onboardingForm');
+  var data = {};
+  
+  // Collect all form fields
+  form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], select, textarea, input[type="hidden"]').forEach(function(el) {
+    if (el.name) data[el.name] = el.value;
+  });
+  
+  // Collect checkboxes
+  form.querySelectorAll('input[type="checkbox"]').forEach(function(el) {
+    if (el.name) data[el.name] = el.checked ? 'Sí' : '';
+  });
+  
+  // Collect rating
+  var ratingInput = form.querySelector('input[name="calidadDatos"]');
+  data['_calidadDatosValue'] = ratingInput ? ratingInput.value : '';
+  
+  data['_currentStep'] = currentStep;
+  data['_timestamp'] = new Date().toISOString();
+  
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  
+  var indicator = document.getElementById('saveIndicator');
+  indicator.classList.add('visible');
+  setTimeout(function() { indicator.classList.remove('visible'); }, 2000);
+}
+
+function restoreDraft() {
+  var raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  
+  try {
+    var data = JSON.parse(raw);
+    var form = document.getElementById('onboardingForm');
+    
+    // Restore text/select/date fields
+    for (var key in data) {
+      if (key.startsWith('_')) continue;
+      var el = form.querySelector('[name="' + key + '"]');
+      if (!el) continue;
+      
+      if (el.type === 'checkbox') {
+        el.checked = (data[key] === 'Sí');
+        if (el.checked) el.closest('.option-row')?.classList.add('selected');
+      } else {
+        el.value = data[key] || '';
+      }
+    }
+    
+    // Restore rating
+    if (data['_calidadDatosValue']) {
+      var ratingBtns = document.querySelectorAll('#calidadRating .rating-btn');
+      ratingBtns.forEach(function(btn) {
+        if (btn.getAttribute('data-value') === data['_calidadDatosValue']) {
+          btn.classList.add('selected');
+        }
+      });
+      var hidden = form.querySelector('input[name="calidadDatos"]');
+      if (hidden) hidden.value = data['_calidadDatosValue'];
+    }
+    
+    // Restore step
+    if (data['_currentStep']) {
+      currentStep = parseInt(data['_currentStep']);
+      updateStep();
+    }
+  } catch(e) {
+    console.warn('Could not restore draft:', e);
+  }
+}
+
+// ═══════════════════════════════════════════
+// SUBMIT
+// ═══════════════════════════════════════════
+function submitForm() {
+  var form = document.getElementById('onboardingForm');
+  var data = {};
+  
+  // Collect all values
+  form.querySelectorAll('input, select, textarea').forEach(function(el) {
+    if (!el.name) return;
+    if (el.type === 'checkbox') {
+      data[el.name] = el.checked ? 'Sí' : 'No';
+    } else if (el.type === 'radio') {
+      if (el.checked) data[el.name] = el.value;
+    } else {
+      data[el.name] = el.value;
+    }
+  });
+  
+  // Add files
+  data.archivos = uploadedFiles;
+  
+  // Validate required
+  if (!data.cliente || !data.cliente.trim()) {
+    showToast('⚠️ El nombre del cliente es obligatorio', 'warning');
+    // Go back to step 1
+    currentStep = 1;
+    updateStep();
+    document.querySelector('[name="cliente"]').focus();
+    return;
+  }
+  
+  if (!data.baseHistorica) {
+    showToast('⚠️ Indica si tienen base de datos histórica (Paso 5)', 'warning');
+    currentStep = 5;
+    updateStep();
+    return;
+  }
+  
+  // Show loading
+  var submitBtn = document.getElementById('submitBtn');
+  var submitText = document.getElementById('submitText');
+  var submitLoader = document.getElementById('submitLoader');
+  submitBtn.disabled = true;
+  submitText.style.display = 'none';
+  submitLoader.style.display = 'inline';
+  
+  // Send to Apps Script
+  var url = APPS_SCRIPT_URL;
+  if (!url || url === '{{APPS_SCRIPT_URL}}') {
+    // Fallback: download as JSON
+    showToast('⚠️ URL del backend no configurada. Descargando respaldo JSON...', 'warning');
+    downloadBackup(data);
+    resetSubmitButton();
+    return;
+  }
+  
+  fetch(url, {
+    method: 'POST',
+    mode: 'no-cors', // Apps Script redirects
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(function(response) {
+    return response.text();
+  })
+  .then(function(text) {
+    try {
+      var result = JSON.parse(text);
+      if (result.status === 'ok') {
+        showToast('✅ Datos enviados correctamente', 'success');
+        // Clear draft
+        localStorage.removeItem(STORAGE_KEY);
+        uploadedFiles = [];
+        renderFileList();
+        // Reset form after 2 seconds
+        setTimeout(function() {
+          form.reset();
+          currentStep = 1;
+          updateStep();
+          resetSubmitButton();
+        }, 2000);
+      } else {
+        showToast('⚠️ ' + (result.error || 'Error desconocido'), 'error');
+        downloadBackup(data);
+        resetSubmitButton();
+      }
+    } catch(e) {
+      // no-cors mode can't read response — assume success if no error thrown
+      showToast('✅ Datos enviados (verificar en Sheet)', 'success');
+      localStorage.removeItem(STORAGE_KEY);
+      uploadedFiles = [];
+      renderFileList();
+      setTimeout(function() {
+        form.reset();
+        currentStep = 1;
+        updateStep();
+        resetSubmitButton();
+      }, 2000);
+    }
+  })
+  .catch(function(err) {
+    showToast('❌ Error de conexión. Se descargó respaldo JSON.', 'error');
+    downloadBackup(data);
+    resetSubmitButton();
+  });
+}
+
+function resetSubmitButton() {
+  var submitBtn = document.getElementById('submitBtn');
+  var submitText = document.getElementById('submitText');
+  var submitLoader = document.getElementById('submitLoader');
+  submitBtn.disabled = false;
+  submitText.style.display = 'inline';
+  submitLoader.style.display = 'none';
+}
+
+function downloadBackup(data) {
+  // Remove file content (too large) and save metadata only
+  var backup = JSON.parse(JSON.stringify(data));
+  if (backup.archivos) {
+    backup.archivos = backup.archivos.map(function(f) {
+      return { name: f.name, size: f.size, mimeType: f.mimeType, _nota: 'Contenido binario no incluido en este respaldo' };
+    });
+  }
+  
+  var blob = new Blob([JSON.stringify(backup, null, 2)], {type: 'application/json'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  var clienteName = (data.cliente || 'cliente').replace(/[^a-zA-Z0-9]/g, '_');
+  var date = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = 'bettermin_onboarding_' + clienteName + '_' + date + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+function showToast(msg, type) {
+  var toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast ' + (type || 'success') + ' show';
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(function() {
+    toast.classList.remove('show');
+  }, 4000);
+}
+
+// ═══════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════
+function debounce(fn, delay) {
+  var timer;
+  return function() {
+    var args = arguments;
+    var ctx = this;
+    clearTimeout(timer);
+    timer = setTimeout(function() { fn.apply(ctx, args); }, delay);
+  };
+}
+</script>
+
+</body>
+</html>
