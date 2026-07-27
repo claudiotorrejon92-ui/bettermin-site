@@ -957,9 +957,9 @@ select{
   </div>
 
   <div style="background:#FFF;border:1px solid #EBEFED;border-radius:12px;padding:16px;margin:20px 0 0;text-align:center">
-    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#0E3B35;margin-bottom:6px">¿Preferís el formulario nativo de Google?</div>
-    <div style="font-size:11px;color:#8FA3AD;margin-bottom:10px">Mismas preguntas, con file upload directo a Drive</div>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLScmatu6xYNNeTYQas_AZWuXHXEn25vyD4_i8QFe3vYZ66jQ-Q/viewform" target="_blank" style="display:inline-block;padding:10px 20px;background:#FFF;color:#2A7A63;border:1.5px solid #2A7A63;border-radius:8px;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px">Abrir Google Form →</a>
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#0E3B35;margin-bottom:6px">Al enviar, se abrirá el Google Form con los datos cargados</div>
+    <div style="font-size:11px;color:#8FA3AD;margin-bottom:10px">Solo tenés que verificar y hacer clic en Enviar → datos al Sheet y Drive</div>
+    <a href="#" onclick="var d={};document.querySelectorAll('[name]').forEach(function(e){if(e.name)d[e.name]=e.type==='checkbox'?(e.checked?'Sí':'No'):e.value});window.open(buildPrefilledUrl(d),'_blank');return false" style="display:inline-block;padding:10px 20px;background:#FFF;color:#2A7A63;border:1.5px solid #2A7A63;border-radius:8px;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px">Abrir Google Form →</a>
   </div>
 
   <div class="btn-row">
@@ -1259,111 +1259,105 @@ function submitForm() {
     }
   });
   
-  data.archivos = uploadedFiles;
-  
   if (!data.cliente || !data.cliente.trim()) {
     showToast('⚠️ El nombre del cliente es obligatorio', 'warning');
     currentStep = 1; updateStep();
-    document.querySelector('[name="cliente"]').focus();
     return;
   }
   
-  if (!data.baseHistorica) {
-    showToast('⚠️ Indica si tienen base de datos histórica (Paso 5)', 'warning');
-    currentStep = 5; updateStep();
-    return;
-  }
+  // ── Guardar borrador y descargar respaldo ──
+  saveDraft();
+  downloadBackup(data);
   
+  // ── Abrir Google Form con datos precargados ──
+  var url = buildPrefilledUrl(data);
+  showToast('✅ Abriendo Google Form con los datos cargados. Solo hacé clic en Enviar.', 'success');
+  
+  setTimeout(function() {
+    window.open(url, '_blank');
+  }, 500);
+  
+  // Reset form
   var submitBtn = document.getElementById('submitBtn');
-  var submitText = document.getElementById('submitText');
-  var submitLoader = document.getElementById('submitLoader');
   submitBtn.disabled = true;
-  submitText.style.display = 'none';
-  submitLoader.style.display = 'inline';
-  
-  sendToGoogleForm(data, function(success) {
-    if (success) {
-      showToast('✅ Datos enviados al Sheet y Drive', 'success');
-      localStorage.removeItem(STORAGE_KEY);
-      uploadedFiles = []; renderFileList();
-      setTimeout(function() {
-        form.reset(); currentStep = 1; updateStep(); resetSubmitButton();
-      }, 2000);
-    } else {
-      showToast('⚠️ Error de envio. Descargando JSON de respaldo...', 'warning');
-      downloadBackup(data);
-      resetSubmitButton();
-    }
-  });
+  document.getElementById('submitText').textContent = '✓ Abriendo Google Form...';
 }
 
-function sendToGoogleForm(data, callback) {
-  var entryMap = {
-    cliente:'1028607393', planta:'23989800', fechaVisita:'1040788426',
-    contactoNombre:'1326686572', contactoCargo:'134388077', contactoEmail:'80378442',
-    contactoTel:'2028295291', tomadoPor:'1130168438',
-    mineral:'522682565', subproductos:'706974421', capacidad:'1306662362',
-    tipoProceso:'300959903', numLineas:'1028431131', horasOp:'81130636',
-    equipos:'362344841', circuitoMolienda:'1858989868', celdasFlotacion:'964775507',
-    tieneEspesador:'278383234', tieneLixiviacion:'2080903405',
-    reactivos:'1667666602', rangoPH:'862956780',
-    scada:'1098393854',
-    baseHistorica:'568824844', tipoDB:'738633335', mesesHistorial:'706245629',
-    frecuenciaCaptura:'2114685251', formatoDatos:'1327787699',
-    calidadDatos:'709234448', comparteDatos:'1696076877',
-    leyCabeza:'1960767109', variabilidad:'1495282369', dureza:'1973535662',
-    qemscan:'1092034644', frecMuestreo:'328038588', analisisLab:'1052872367',
-    estandaresQC:'1427649170', formatoReportes:'199951514',
-    accesoScada:'1550443220', redServidor:'1521586839', adminIT:'841114787',
-    archivosLinks:'498148882', notas:'1520773381'
+function buildPrefilledUrl(data) {
+  var base = 'https://docs.google.com/forms/d/e/1FAIpQLSdoUcAcrcETW0jRkS5k2mfHmPJ6zXMnqAIL0v1j1y7u9VwfEg/viewform?usp=pp_url';
+  
+  var mapping = {
+    'entry.1028607393': data.cliente,
+    'entry.23989800': data.planta,
+    'entry.1040788426': data.fechaVisita,
+    'entry.1326686572': data.contactoNombre,
+    'entry.134388077': data.contactoCargo,
+    'entry.80378442': data.contactoEmail,
+    'entry.2028295291': data.contactoTel,
+    'entry.1130168438': data.tomadoPor,
+    'entry.522682565': data.mineral,
+    'entry.706974421': data.subproductos,
+    'entry.1306662362': data.capacidad,
+    'entry.300959903': data.tipoProceso,
+    'entry.1028431131': data.numLineas,
+    'entry.81130636': data.horasOp,
+    'entry.362344841': data.equipos,
+    'entry.1858989868': data.circuitoMolienda,
+    'entry.964775507': data.celdasFlotacion,
+    'entry.278383234': data.tieneEspesador,
+    'entry.2080903405': data.tieneLixiviacion,
+    'entry.1667666602': data.reactivos,
+    'entry.862956780': data.rangoPH,
+    'entry.1098393854': data.scada,
+    'entry.568824844': data.baseHistorica,
+    'entry.738633335': data.tipoDB,
+    'entry.706245629': data.mesesHistorial,
+    'entry.2114685251': data.frecuenciaCaptura,
+    'entry.1327787699': data.formatoDatos,
+    'entry.709234448': data.calidadDatos,
+    'entry.1696076877': data.comparteDatos,
+    'entry.1960767109': data.leyCabeza,
+    'entry.1495282369': data.variabilidad,
+    'entry.1973535662': data.dureza,
+    'entry.1092034644': data.qemscan,
+    'entry.328038588': data.frecMuestreo,
+    'entry.1052872367': data.analisisLab,
+    'entry.1427649170': data.estandaresQC,
+    'entry.199951514': data.formatoReportes,
+    'entry.1550443220': data.accesoScada,
+    'entry.1521586839': data.redServidor,
+    'entry.841114787': data.adminIT,
+    'entry.498148882': data.archivosLinks,
+    'entry.1520773381': data.notas
   };
-  var sensorEntryId = '1209463067';
-  var sensorValues = {
-    sensorFlujo:'Sensor de Flujo', sensorPH:'Sensor de pH Online',
-    sensorDensidad:'Sensor de Densidad', analizadorLinea:'Analizador en Linea (Courier/LIX/XRF)',
-    mideRecuperacion:'Medicion de Recuperacion', tonelajeOnline:'Tonelaje Online (balanza en correa)',
-    psd:'Granulometria Online / PSD (Malvern/Metso)'
-  };
-  var formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdoUcAcrcETW0jRkS5k2mfHmPJ6zXMnqAIL0v1j1y7u9VwfEg/formResponse';
   
-  var iframe = document.getElementById('googleFormIframe');
-  if (!iframe) {
-    iframe = document.createElement('iframe');
-    iframe.id = 'googleFormIframe'; iframe.name = 'googleFormIframe';
-    iframe.style.display = 'none'; document.body.appendChild(iframe);
-  }
-  
-  var pf = document.getElementById('googleFormProxy');
-  if (!pf) {
-    pf = document.createElement('form');
-    pf.id = 'googleFormProxy'; pf.method = 'POST';
-    pf.action = formUrl; pf.target = 'googleFormIframe';
-    pf.style.display = 'none'; document.body.appendChild(pf);
-  }
-  pf.innerHTML = '';
-  
-  for (var key in entryMap) {
-    if (entryMap.hasOwnProperty(key) && data[key] && data[key] !== '') {
-      var inp = document.createElement('input');
-      inp.type = 'hidden'; inp.name = 'entry.' + entryMap[key];
-      inp.value = data[key]; pf.appendChild(inp);
+  var params = [];
+  for (var key in mapping) {
+    var val = mapping[key];
+    if (val && val !== '') {
+      params.push(key + '=' + encodeURIComponent(val));
     }
   }
   
-  for (var sk in sensorValues) {
-    if (sensorValues.hasOwnProperty(sk) && data[sk] === 'Sí') {
-      var cb = document.createElement('input');
-      cb.type = 'hidden'; cb.name = 'entry.' + sensorEntryId;
-      cb.value = sensorValues[sk]; pf.appendChild(cb);
+  // Sensor checkboxes
+  var sensorChecks = {
+    'sensorFlujo': 'Sensor de Flujo',
+    'sensorPH': 'Sensor de pH Online',
+    'sensorDensidad': 'Sensor de Densidad',
+    'analizadorLinea': 'Analizador en Linea (Courier/LIX/XRF)',
+    'mideRecuperacion': 'Medicion de Recuperacion',
+    'tonelajeOnline': 'Tonelaje Online (balanza en correa)',
+    'psd': 'Granulometria Online / PSD (Malvern/Metso)'
+  };
+  for (var sk in sensorChecks) {
+    if (data[sk] === 'Sí') {
+      params.push('entry.1209463067=' + encodeURIComponent(sensorChecks[sk]));
     }
   }
   
-  var sent = false;
-  var t = setTimeout(function() { if (!sent) { sent = true; callback(false); } }, 8000);
-  iframe.onload = function() { if (!sent) { sent = true; clearTimeout(t); callback(true); } };
-  
-  try { pf.submit(); } catch(e) { clearTimeout(t); callback(false); }
+  return base + '&' + params.join('&');
 }
+
 
 function resetSubmitButton() {
   var submitBtn = document.getElementById('submitBtn');
