@@ -1,8 +1,7 @@
 name: Publish BetterMin redesign
 
 on:
-  push:
-    branches: [main]
+  # Preview publication is manual only. Normal pushes deploy index.html via deploy.yml.
   workflow_dispatch:
 
 permissions:
