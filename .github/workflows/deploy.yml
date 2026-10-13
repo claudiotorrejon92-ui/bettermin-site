@@ -1,8 +1,8 @@
 name: Deploy
 
 on:
-  push:
-    branches: ["main"]
+  # Automatic publishing is handled by the repository Pages source workflow.
+  # Keep this manual for controlled emergency/recovery deployments only.
   workflow_dispatch:
 
 permissions:
