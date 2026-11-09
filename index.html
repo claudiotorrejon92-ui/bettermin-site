@@ -371,7 +371,7 @@ p{color:var(--text-2)}
   <a class="l" href="#aplicaciones">Aplicaciones</a>
   <a class="l" href="#modelo">Cómo trabajamos</a>
   <a class="l" href="#equipo">Equipo</a>
-  <a class="l" href="#contacto">Contacto</a>
+  <a class="l" href="/contacto/">Contacto</a>
   <small>BetterMin, Santiago de Chile</small>
 </div>
 
@@ -384,7 +384,7 @@ p{color:var(--text-2)}
       <a href="#aplicaciones">Aplicaciones</a>
       <a href="#modelo">Cómo trabajamos</a>
       <a href="#equipo">Equipo</a>
-      <a href="#contacto" class="btn-o">Contacto</a>
+      <a href="/contacto/" class="btn-o">Contacto</a>
     </nav>
     <a class="mb" href="#menu" aria-label="Abrir menú"><span></span><span></span><span></span></a>
   </div>
@@ -399,7 +399,7 @@ p{color:var(--text-2)}
       <h1><span class="ln"><span>La biología</span></span><span class="ln"><span>de tu proceso</span></span><span class="ln"><span class="gold">finalmente</span></span><span class="ln"><span class="gold">tiene dueño.</span></span></h1>
       <p class="hero-sub fade">Leemos las comunidades microbianas que viven en la pulpa, el agua de proceso y el mineral de tu planta, y las convertimos en inteligencia operacional propietaria. Los indicadores que tu SCADA nunca te va a dar.</p>
       <div class="hero-cta fade">
-        <a href="#contacto" class="btn">Alinear un piloto <span aria-hidden="true">→</span></a>
+        <a href="/contacto/" class="btn">Alinear un piloto <span aria-hidden="true">→</span></a>
         <a href="#como" class="link-a">Cómo funciona <span aria-hidden="true">↓</span></a>
       </div>
     </div>
@@ -607,7 +607,7 @@ p{color:var(--text-2)}
       <div class="next reveal d1">
         <span class="mono">Hablemos de su planta</span>
         <p>Cuéntenos qué proceso opera y qué datos tiene hoy. Le respondemos con una propuesta de diagnóstico.</p>
-        <a href="#contacto" class="btn">Agendar reunión técnica <span aria-hidden="true">→</span></a>
+        <a href="/contacto/" class="btn">Agendar reunión técnica <span aria-hidden="true">→</span></a>
       </div>
     </div>
     <div class="apoyo reveal">
@@ -622,6 +622,12 @@ p{color:var(--text-2)}
     <div class="legal"><span>© 2026 BetterMin SpA</span><span>Minería inteligente, futuro sostenible</span></div>
   </div>
 </footer>
+
+<script>
+  // Los enlaces viejos a /#contacto (correos, bios, tarjetas impresas) siguen circulando:
+  // se mandan a la página dedicada. El ancla del pie se mantiene como respaldo sin JS.
+  if (location.hash === '#contacto') location.replace('/contacto/');
+</script>
 
 <script>
 (function(){
