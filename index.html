@@ -72,6 +72,10 @@ p{color:var(--text-2)}
 .links a:hover,.links a.on{color:var(--text)}
 .btn-o{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border:1px solid var(--line-2);border-radius:3px;font-size:13.5px;font-weight:500;color:var(--text)!important;transition:background .3s,border-color .3s,color .3s}
 .btn-o:hover{background:var(--text);color:var(--bg)!important;border-color:var(--text)}
+.btn-in{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid rgba(140,207,179,.38);border-radius:3px;font-size:13.5px;font-weight:500;color:var(--mint)!important;background:rgba(140,207,179,.07);transition:background .3s,border-color .3s,color .3s}
+.btn-in:hover{background:var(--mint);color:var(--bg)!important;border-color:var(--mint)}
+.btn-in svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.6;transition:transform .3s var(--ease)}
+.btn-in:hover svg{transform:translateX(2px)}
 .mb{display:none;width:44px;height:44px;position:relative;color:var(--text)}
 .mb span{position:absolute;left:11px;width:22px;height:1.5px;background:currentColor}
 .mb span:nth-child(1){top:16px}.mb span:nth-child(2){top:22px}.mb span:nth-child(3){top:28px}
@@ -272,6 +276,13 @@ p{color:var(--text-2)}
 .next{border:1px solid var(--line-2);border-radius:6px;padding:30px;background:var(--surface)}
 .next .mono{color:var(--gold);display:block;margin-bottom:14px}
 .next p{font-size:15px;margin:0 0 26px;color:var(--text-2)}
+.cta-side{display:grid;gap:16px;align-content:end}
+.acceso-lnk{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 26px;border:1px solid rgba(140,207,179,.26);border-radius:6px;background:linear-gradient(135deg,rgba(140,207,179,.12),rgba(140,207,179,.02));transition:border-color .3s,background .3s,transform .3s var(--ease)}
+.acceso-lnk:hover{border-color:rgba(140,207,179,.6);background:rgba(140,207,179,.16);transform:translateY(-2px)}
+.acceso-lnk .mono{color:var(--mint);display:block;margin-bottom:6px}
+.acceso-lnk strong{display:block;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:18px;letter-spacing:-.02em;color:var(--text)}
+.acceso-lnk .arw{font-size:20px;color:var(--mint);transition:transform .3s var(--ease)}
+.acceso-lnk:hover .arw{transform:translateX(4px)}
 .apoyo{position:relative;margin-top:120px;padding:40px 0;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:32px}
 .apoyo .mono{color:var(--text-3)}
 .apoyo-l{display:flex;align-items:center;gap:72px}
@@ -371,6 +382,7 @@ p{color:var(--text-2)}
   <a class="l" href="#aplicaciones">Aplicaciones</a>
   <a class="l" href="#modelo">Cómo trabajamos</a>
   <a class="l" href="#equipo">Equipo</a>
+  <a class="l" href="https://workflow.bettermin.com/">Ingresar</a>
   <a class="l" href="/contacto/">Contacto</a>
   <small>BetterMin, Santiago de Chile</small>
 </div>
@@ -384,6 +396,7 @@ p{color:var(--text-2)}
       <a href="#aplicaciones">Aplicaciones</a>
       <a href="#modelo">Cómo trabajamos</a>
       <a href="#equipo">Equipo</a>
+      <a href="https://workflow.bettermin.com/" class="btn-in">Ingresar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg></a>
       <a href="/contacto/" class="btn-o">Contacto</a>
     </nav>
     <a class="mb" href="#menu" aria-label="Abrir menú"><span></span><span></span><span></span></a>
@@ -604,10 +617,19 @@ p{color:var(--text-2)}
         <h2>La minería del futuro será más inteligente, más integrada y <span class="gold">más biológica.</span></h2>
         <p>Descubra cómo BetterMin transforma datos operacionales, mineralógicos y biológicos en decisiones que mejoran el desempeño de los procesos mineros.</p>
       </div>
-      <div class="next reveal d1">
-        <span class="mono">Hablemos de su planta</span>
-        <p>Cuéntenos qué proceso opera y qué datos tiene hoy. Le respondemos con una propuesta de diagnóstico.</p>
-        <a href="/contacto/" class="btn">Agendar reunión técnica <span aria-hidden="true">→</span></a>
+      <div class="cta-side">
+        <div class="next reveal d1">
+          <span class="mono">Hablemos de su planta</span>
+          <p>Cuéntenos qué proceso opera y qué datos tiene hoy. Le respondemos con una propuesta de diagnóstico.</p>
+          <a href="/contacto/" class="btn">Agendar reunión técnica <span aria-hidden="true">→</span></a>
+        </div>
+        <a class="acceso-lnk reveal d2" href="https://workflow.bettermin.com/">
+          <span>
+            <span class="mono">Acceso clientes</span>
+            <strong>Ingresar a Workflow</strong>
+          </span>
+          <span class="arw" aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
     <div class="apoyo reveal">
@@ -616,7 +638,7 @@ p{color:var(--text-2)}
     </div>
     <div class="foot">
       <div><img src="bettermin-logo.png" alt="BetterMin"><p>Biotecnología e Inteligencia Operacional para la Minería.</p></div>
-      <div><h4>Sitio</h4><ul><li><a href="#como">Cómo funciona</a></li><li><a href="#ventaja">Biología</a></li><li><a href="#modelo">Cómo trabajamos</a></li><li><a href="#equipo">Equipo</a></li></ul></div>
+      <div><h4>Sitio</h4><ul><li><a href="#como">Cómo funciona</a></li><li><a href="#ventaja">Biología</a></li><li><a href="#modelo">Cómo trabajamos</a></li><li><a href="#equipo">Equipo</a></li><li><a href="https://workflow.bettermin.com/">Ingresar</a></li></ul></div>
       <div><h4>BetterMin SpA</h4><ul><li>Chile</li><li><a href="https://bettermin.com">bettermin.com</a></li></ul></div>
     </div>
     <div class="legal"><span>© 2026 BetterMin SpA</span><span>Minería inteligente, futuro sostenible</span></div>
