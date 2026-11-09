@@ -981,9 +981,9 @@ select{
   </div>
 
   <div style="background:#FFF;border:1px solid #EBEFED;border-radius:12px;padding:16px;margin:20px 0 0;text-align:center">
-    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#0E3B35;margin-bottom:6px">Envía automáticamente al email y Sheet de BetterMin</div>
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#0E3B35;margin-bottom:6px">Envía automáticamente el aviso por correo al equipo BetterMin</div>
     <div style="font-size:11px;color:#8FA3AD;margin-bottom:10px">Cero clics extra. Adjuntá archivos Excel/CSV en el campo de links.</div>
-    <a href="#" onclick="submitForm();return false" style="display:inline-block;padding:10px 20px;background:#FFF;color:#2A7A63;border:1.5px solid #2A7A63;border-radius:8px;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px">Abrir Google Form →</a>
+    <a href="#" onclick="submitForm();return false" style="display:inline-block;padding:10px 20px;background:#FFF;color:#2A7A63;border:1.5px solid #2A7A63;border-radius:8px;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px">Enviar el formulario →</a>
   </div>
 
   <div class="btn-row">
@@ -1495,7 +1495,7 @@ function submitForm() {
   .then(function(r) { return r.json(); })
   .then(function(result) {
     if (result.status === 'ok') {
-      showToast('Datos enviados! Email a claudio.torrejon@bettermin.com + Sheet actualizado.', 'success');
+      showToast('Datos enviados! El equipo BetterMin fue notificado por correo.', 'success');
       localStorage.removeItem(STORAGE_KEY);
       uploadedFiles = []; renderFileList();
       setTimeout(function() {
