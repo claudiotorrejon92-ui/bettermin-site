@@ -27,6 +27,7 @@ jobs:
           cp index.html dist/
           cp onboarding.html dist/ 2>/dev/null || true
           cp -r 4dei dist/ 2>/dev/null || true
+          cp -r contacto dist/ 2>/dev/null || true
           cp .nojekyll dist/ 2>/dev/null || true
           cp CNAME dist/ 2>/dev/null || true
           cp -r assets dist/ 2>/dev/null || true
